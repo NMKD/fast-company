@@ -7,14 +7,6 @@ const Users = () => {
   const handleDelete = (userId) =>
     setUsers((prevState) => prevState.filter((d) => d._id !== userId));
 
-  //   const renderPhrase = (number) => {
-  //     return number !== 0 ? (
-  //       <span>{`${number} человек тусанет с тобой сегодня`}</span>
-  //     ) : (
-  //       <span> Ни кто с тобой не тусанет</span>
-  //     );
-  //   };
-
   const renderPhrase = (number) =>
     number === 2 || number === 3 || number === 4
       ? number + " человека тусанут с тобой"
