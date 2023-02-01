@@ -9,7 +9,7 @@ const Users = () => {
   };
   const renderPhrase = (number) => {
     return number !== 0 ? (
-      <span>{`${number} человек тусанет с тобой today`}</span>
+      <span>{`${number} человек тусанет с тобой сегодня`}</span>
     ) : (
       <span> Ни кто с тобой не тусанет</span>
     );
@@ -26,7 +26,7 @@ const Users = () => {
         {renderPhrase(users.length)}
       </button>
       <table className="table">
-        <thead onClick={renderPhrase}>
+        <thead>
           <tr>
             <th scope="col">Имя</th>
             <th scope="col">Качество</th>
