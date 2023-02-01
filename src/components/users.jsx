@@ -7,10 +7,12 @@ const Users = () => {
   const handleDelete = (userId) =>
     setUsers((prevState) => prevState.filter((d) => d._id !== userId));
 
-  const renderPhrase = (number) =>
-    number === 2 || number === 3 || number === 4
-      ? number + " человека тусанут с тобой"
-      : number + " человек тусанет с тобой";
+  const renderPhrase = (number) => {
+    let num = [2, 3, 4, 22, 23, 24, 32, 33, 34, 42, 43, 44].includes(number);
+    return num
+      ? `${number} человека тусанут с тобой`
+      : `${number} человек тусанет с тобой`;
+  };
 
   return (
     <>
