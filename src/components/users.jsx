@@ -3,13 +3,30 @@ import { useState } from "react";
 
 const Users = () => {
   const [users, setUsers] = useState(api.users.fetchAll());
-
+  const numbers = [2, 3, 4, 22, 23, 24, 32, 33, 34, 42, 43, 44];
+  const findNumber = (arr, value) => {
+    let low = 0;
+    let high = arr.length - 1;
+    while (low <= high) {
+      let mid = Math.round((low + high) / 2);
+      let guess = arr[mid];
+      console.log(high);
+      if (guess === value) {
+        return true;
+      }
+      if (guess > value) {
+        high = mid - 1;
+      } else {
+        low = mid + 1;
+      }
+    }
+    return false;
+  };
   const handleDelete = (userId) =>
     setUsers((prevState) => prevState.filter((d) => d._id !== userId));
 
   const renderPhrase = (number) => {
-    let num = [2, 3, 4, 22, 23, 24, 32, 33, 34, 42, 43, 44].includes(number);
-    return num
+    return findNumber(numbers, number)
       ? `${number} человека тусанут с тобой сегодня`
       : `${number} человек тусанет с тобой сегодня`;
   };
