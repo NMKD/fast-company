@@ -4,16 +4,21 @@ import { useState } from "react";
 const Users = () => {
   const [users, setUsers] = useState(api.users.fetchAll());
 
-  const handleDelete = (userId) => {
-    return setUsers((prevState) => prevState.filter((d) => d._id !== userId));
-  };
-  const renderPhrase = (number) => {
-    return number !== 0 ? (
-      <span>{`${number} человек тусанет с тобой сегодня`}</span>
-    ) : (
-      <span> Ни кто с тобой не тусанет</span>
-    );
-  };
+  const handleDelete = (userId) =>
+    setUsers((prevState) => prevState.filter((d) => d._id !== userId));
+
+  //   const renderPhrase = (number) => {
+  //     return number !== 0 ? (
+  //       <span>{`${number} человек тусанет с тобой сегодня`}</span>
+  //     ) : (
+  //       <span> Ни кто с тобой не тусанет</span>
+  //     );
+  //   };
+
+  const renderPhrase = (number) =>
+    number === 2 || number === 3 || number === 4
+      ? number + " человека тусанут с тобой"
+      : number + " человек тусанет с тобой";
 
   return (
     <>
