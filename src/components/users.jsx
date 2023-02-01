@@ -8,10 +8,10 @@ const Users = () => {
     setUsers((prevState) => prevState.filter((d) => d._id !== userId));
 
   const renderPhrase = (number) => {
-    const lastOne = Number(number.toString().slice(-1));
-    if ([2, 3, 4, 22, 23, 24].includes(number)) return "человека тусанут";
-    if (lastOne === 1) return "человек тусанет";
-    return "человек тусанет";
+    let num = [2, 3, 4, 22, 23, 24, 32, 33, 34, 42, 43, 44].includes(number);
+    return num
+      ? `${number} человека тусанут с тобой сегодня`
+      : `${number} человек тусанет с тобой сегодня`;
   };
 
   return (
@@ -22,7 +22,7 @@ const Users = () => {
         }
       >
         {users.length > 0
-          ? `${users.length + " " + renderPhrase(users.length)} с тобой сегодня`
+          ? renderPhrase(users.length)
           : "Никто с тобой не тусанет"}
       </button>
       {users.length > 0 && (
