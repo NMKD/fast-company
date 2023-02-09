@@ -5,11 +5,7 @@ const BookMark = ({ id, status, toogle }) => {
         onClick={() => toogle(id)}
         className={"btn " + (!status ? " btn-primary" : "btn-success")}
       >
-        {!status ? (
-          <i className="bi bi-bookmark"></i>
-        ) : (
-          <i className="bi bi-bookmark-fill"></i>
-        )}
+        <i className={"bi bi-bookmark" + (status ? "-fill" : " ")}></i>
         {status}
       </button>
     </>
