@@ -1,12 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const GroupList = ({
-    items,
-    valueProperty = "_id",
-    contentProperty = "name",
-    onFilter
-}) => {
+const GroupList = ({ items, valueProperty, contentProperty, onFilter }) => {
     return (
         <>
             <ul className="list-group">
@@ -22,11 +17,14 @@ const GroupList = ({
         </>
     );
 };
-
+GroupList.defaultProps = {
+    valueProperty: "_id",
+    contentProperty: "name"
+};
 GroupList.propTypes = {
     items: PropTypes.object.isRequired,
-    valueProperty: PropTypes.string,
-    contentProperty: PropTypes.string,
+    valueProperty: PropTypes.string.isRequired,
+    contentProperty: PropTypes.string.isRequired,
     onFilter: PropTypes.func.isRequired
 };
 
