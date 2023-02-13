@@ -7,11 +7,9 @@ export const professions = {
     cook: { _id: "67rdca3eeb7f6fgeed471829", name: "Повар" }
 };
 
-const fetchAll = () =>
+export const fetchAll = () =>
     new Promise((resolve) => {
         setTimeout(() => {
             resolve(professions);
         }, 2000);
     });
-
-export default fetchAll;

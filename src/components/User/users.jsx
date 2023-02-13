@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import User from "./user";
 import PropTypes from "prop-types";
 import SearchStatus from "./searchStatus";
 import Pagination from "./pagination";
 import paginate from "../../utils/paginate";
 import GroupList from "./groupList";
+import api from "../../api";
 
 const Users = ({ users, onDelete, onToogle }) => {
     const tableHead = [
@@ -15,6 +16,7 @@ const Users = ({ users, onDelete, onToogle }) => {
         "Оценка",
         "Избранное"
     ];
+
     const count = users.length;
     // Pagination
     const pageSize = 4;
@@ -24,12 +26,36 @@ const Users = ({ users, onDelete, onToogle }) => {
     };
     const usersCrop = paginate(users, currentPage, pageSize);
 
+    // professions/api
+    const [professions, setProfessions] = useState();
+    async function fetchData() {
+        try {
+            return await api.professions.fetchAll();
+        } catch (error) {
+            throw new Error(
+                "error when mounting the component GroupList in Users"
+            );
+        }
+    }
+    const handleFilterSelect = (params) => {
+        console.log(params);
+    };
+    useEffect(() => {
+        setProfessions(fetchData());
+        setCurrentPage(1);
+    }, []);
+
     return (
         <>
             <div className="container pt-4">
                 <div className="row">
                     <div className="col-2">
-                        <GroupList />
+                        {professions && (
+                            <GroupList
+                                items={professions}
+                                onFilter={() => handleFilterSelect}
+                            />
+                        )}
                     </div>
                     <div className="col-10">
                         <SearchStatus length={count} />
