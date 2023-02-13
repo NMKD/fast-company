@@ -23,8 +23,8 @@ GroupList.defaultProps = {
 };
 GroupList.propTypes = {
     items: PropTypes.object.isRequired,
-    valueProperty: PropTypes.string.isRequired,
-    contentProperty: PropTypes.string.isRequired,
+    valueProperty: PropTypes.string,
+    contentProperty: PropTypes.string,
     onFilter: PropTypes.func.isRequired
 };
 
