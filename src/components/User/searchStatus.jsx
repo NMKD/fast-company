@@ -8,7 +8,9 @@ const SearchStatus = ({ length }) => {
   };
   return (
     <button
-      className={"btn m-2 " + (length === 0 ? "btn-danger" : "btn-primary")}
+      className={
+        "btn mt-2 mb-2 " + (length === 0 ? "btn-danger" : "btn-primary")
+      }
     >
       {length > 0 ? renderPhrase(length) : "Никто с тобой не тусанет"}
     </button>
