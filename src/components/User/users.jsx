@@ -30,7 +30,8 @@ const Users = ({ users, onDelete, onToogle }) => {
     const [professions, setProfessions] = useState();
     async function fetchData() {
         try {
-            return await api.professions.fetchAll();
+            const newProf = await api.professions.fetchAll();
+            setProfessions(newProf);
         } catch (error) {
             throw new Error(
                 "error when mounting the component GroupList in Users"
@@ -41,7 +42,7 @@ const Users = ({ users, onDelete, onToogle }) => {
         console.log(params);
     };
     useEffect(() => {
-        setProfessions(fetchData());
+        fetchData();
         setCurrentPage(1);
     }, []);
 
