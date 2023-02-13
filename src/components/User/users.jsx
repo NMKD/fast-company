@@ -54,7 +54,7 @@ const Users = ({ users, onDelete, onToogle }) => {
                         {professions && (
                             <GroupList
                                 items={professions}
-                                onFilter={() => handleFilterSelect}
+                                onFilter={handleFilterSelect}
                             />
                         )}
                     </div>

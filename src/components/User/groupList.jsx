@@ -1,14 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const GroupList = ({ items }) => {
-    const professions = Object.keys(items);
+const GroupList = ({
+    items,
+    valueProperty = "_id",
+    contentProperty = "name",
+    onFilter
+}) => {
     return (
         <>
             <ul className="list-group">
-                {professions.map((item, i) => (
-                    <li className="list-group-item" key={`${item}-${i}`}>
-                        {item}
+                {Object.keys(items).map((item) => (
+                    <li
+                        className="list-group-item"
+                        key={items[item][valueProperty]}
+                    >
+                        {items[item][contentProperty]}
                     </li>
                 ))}
             </ul>
@@ -17,7 +24,10 @@ const GroupList = ({ items }) => {
 };
 
 GroupList.propTypes = {
-    items: PropTypes.object.isRequired
+    items: PropTypes.object.isRequired,
+    valueProperty: PropTypes.string,
+    contentProperty: PropTypes.string,
+    onFilter: PropTypes.func.isRequired
 };
 
 export default GroupList;
