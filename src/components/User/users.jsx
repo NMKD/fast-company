@@ -63,7 +63,7 @@ const Users = ({ users, onDelete, onToogle }) => {
         <>
             <div className="container pt-4">
                 <div className="row">
-                    <div className="col-2">
+                    <div className="col col-sm-12 col-lg-2">
                         {professions && (
                             <>
                                 <GroupList
@@ -80,7 +80,7 @@ const Users = ({ users, onDelete, onToogle }) => {
                             </>
                         )}
                     </div>
-                    <div className="col-10">
+                    <div className="col col-sm-12 col-lg-8">
                         <SearchStatus length={count} />
                         {count > 0 && (
                             <table className="table">
