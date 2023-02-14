@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React from "react";
 import PropTypes from "prop-types";
 
@@ -11,19 +12,33 @@ const GroupList = ({
     return (
         <>
             <ul className="list-group">
-                {Object.keys(items).map((item) => (
-                    <li
-                        className={
-                            "list-group-item " +
-                            (selectedItem === items[item] ? "active" : "")
-                        }
-                        key={items[item][valueProperty]}
-                        onClick={() => onFilter(items[item])}
-                        role="button"
-                    >
-                        {items[item][contentProperty]}
-                    </li>
-                ))}
+                {Array.isArray(items)
+                    ? items.map((item) => (
+                          <li
+                              className={
+                                  "list-group-item " +
+                                  (selectedItem === item ? "active" : "")
+                              }
+                              key={item[valueProperty]}
+                              onClick={() => onFilter(item)}
+                              role="button"
+                          >
+                              {item[contentProperty]}
+                          </li>
+                      ))
+                    : Object.keys(items).map((item) => (
+                          <li
+                              className={
+                                  "list-group-item " +
+                                  (selectedItem === items[item] ? "active" : "")
+                              }
+                              key={items[item][valueProperty]}
+                              onClick={() => onFilter(items[item])}
+                              role="button"
+                          >
+                              {items[item][contentProperty]}
+                          </li>
+                      ))}
             </ul>
         </>
     );
@@ -33,7 +48,7 @@ GroupList.defaultProps = {
     contentProperty: "name"
 };
 GroupList.propTypes = {
-    items: PropTypes.object.isRequired,
+    items: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     selectedItem: PropTypes.object,
     valueProperty: PropTypes.string,
     contentProperty: PropTypes.string,

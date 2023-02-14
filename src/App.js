@@ -3,8 +3,19 @@ import Users from "./components/User/users";
 import api from "./api/index";
 
 const App = () => {
-    const apiUsers = api.users.fetchAll();
-    const [users, setUsers] = useState(apiUsers);
+    const [users, setUsers] = useState([]);
+
+    async function fetchData() {
+        try {
+            const apiUsers = await api.users.fetchAll();
+            setUsers(apiUsers);
+        } catch (error) {
+            throw new Error(
+                "error when mounting the component App when fetchData to api/users"
+            );
+        }
+    }
+
     const handleDelete = (userId) =>
         setUsers((prevState) => prevState.filter((d) => d._id !== userId));
 
@@ -19,6 +30,10 @@ const App = () => {
             }))
         );
     };
+
+    useState(() => {
+        fetchData();
+    }, [users]);
 
     return (
         <>

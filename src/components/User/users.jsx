@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React, { useState, useEffect } from "react";
 import User from "./user";
 import PropTypes from "prop-types";
@@ -29,7 +30,11 @@ const Users = ({ users, onDelete, onToogle }) => {
     const [selectedProf, setSelectedProf] = useState();
 
     const filterredUsers = selectedProf
-        ? users.filter((user) => user.profession === selectedProf)
+        ? users.filter(
+              (user) =>
+                  JSON.stringify(user.profession) ===
+                  JSON.stringify(selectedProf)
+          )
         : users;
 
     const count = filterredUsers.length;
@@ -55,9 +60,13 @@ const Users = ({ users, onDelete, onToogle }) => {
     };
 
     useEffect(() => {
+        setCurrentPage(1);
+    }, [selectedProf]);
+
+    useEffect(() => {
         fetchData();
         setCurrentPage(1);
-    }, []);
+    }, [professions]);
 
     return (
         <>
