@@ -24,10 +24,18 @@ const Users = ({ users, onDelete, onToogle }) => {
     const handlePageChange = (i) => {
         setCurrentPage(i);
     };
-    const usersCrop = paginate(users, currentPage, pageSize);
 
-    // professions/api
+    // professions/api/filter
     const [professions, setProfessions] = useState();
+    const [selectedProf, setSelectedProf] = useState();
+
+    const filterredUsers = selectedProf
+        ? users.filter((user) => user.profession === selectedProf)
+        : users;
+    console.log(users);
+    // Pagination/ отображение пользователей / фильтр
+    const usersCrop = paginate(filterredUsers, currentPage, pageSize);
+
     async function fetchData() {
         try {
             const newProf = await api.professions.fetchAll();
@@ -38,9 +46,10 @@ const Users = ({ users, onDelete, onToogle }) => {
             );
         }
     }
-    const handleFilterSelect = (params) => {
-        console.log(params);
+    const handleFilterSelect = (item) => {
+        setSelectedProf(item);
     };
+
     useEffect(() => {
         fetchData();
         setCurrentPage(1);
@@ -53,6 +62,7 @@ const Users = ({ users, onDelete, onToogle }) => {
                     <div className="col-2">
                         {professions && (
                             <GroupList
+                                selectedItem={selectedProf}
                                 items={professions}
                                 onFilter={handleFilterSelect}
                             />
