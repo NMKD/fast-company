@@ -17,7 +17,6 @@ const Users = ({ users, onDelete, onToogle }) => {
         "Избранное"
     ];
 
-    const count = users.length;
     // Pagination
     const pageSize = 4;
     const [currentPage, setCurrentPage] = useState(1);
@@ -32,7 +31,8 @@ const Users = ({ users, onDelete, onToogle }) => {
     const filterredUsers = selectedProf
         ? users.filter((user) => user.profession === selectedProf)
         : users;
-    console.log(users);
+
+    const count = filterredUsers.length;
     // Pagination/ отображение пользователей / фильтр
     const usersCrop = paginate(filterredUsers, currentPage, pageSize);
 
@@ -50,6 +50,10 @@ const Users = ({ users, onDelete, onToogle }) => {
         setSelectedProf(item);
     };
 
+    const handleClearFilterSelect = () => {
+        setSelectedProf();
+    };
+
     useEffect(() => {
         fetchData();
         setCurrentPage(1);
@@ -61,11 +65,19 @@ const Users = ({ users, onDelete, onToogle }) => {
                 <div className="row">
                     <div className="col-2">
                         {professions && (
-                            <GroupList
-                                selectedItem={selectedProf}
-                                items={professions}
-                                onFilter={handleFilterSelect}
-                            />
+                            <>
+                                <GroupList
+                                    selectedItem={selectedProf}
+                                    items={professions}
+                                    onFilter={handleFilterSelect}
+                                />
+                                <button
+                                    className="btn btn-danger mt-2 mb-2"
+                                    onClick={handleClearFilterSelect}
+                                >
+                                    Очистить
+                                </button>
+                            </>
                         )}
                     </div>
                     <div className="col-10">
