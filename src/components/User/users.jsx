@@ -1,33 +1,22 @@
 /* eslint-disable indent */
 import React, { useState, useEffect } from "react";
-import User from "./user";
 import PropTypes from "prop-types";
 import SearchStatus from "./searchStatus";
 import Pagination from "./pagination";
 import paginate from "../../utils/paginate";
 import GroupList from "./groupList";
+import Table from "./table";
+import _ from "lodash";
 import api from "../../api";
 
 const Users = ({ users, onDelete, onToogle }) => {
-    const tableHead = [
-        "Имя",
-        "Качество",
-        "Профессия",
-        "Встретился, раз",
-        "Оценка",
-        "Избранное"
-    ];
-
     // Pagination
-    const pageSize = 4;
+    const pageSize = 6;
     const [currentPage, setCurrentPage] = useState(1);
-    const handlePageChange = (i) => {
-        setCurrentPage(i);
-    };
-
     // professions/api/filter
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
+    const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
 
     const filterredUsers = selectedProf
         ? users.filter(
@@ -38,8 +27,15 @@ const Users = ({ users, onDelete, onToogle }) => {
         : users;
 
     const count = filterredUsers.length;
+
+    const sortedUsers = _.orderBy(
+        filterredUsers,
+        [sortBy.iter],
+        [sortBy.order]
+    );
+
     // Pagination/ отображение пользователей / фильтр
-    const usersCrop = paginate(filterredUsers, currentPage, pageSize);
+    const usersCrop = paginate(sortedUsers, currentPage, pageSize);
 
     async function fetchData() {
         try {
@@ -51,12 +47,25 @@ const Users = ({ users, onDelete, onToogle }) => {
             );
         }
     }
+    // Pagination
+    const handlePageChange = (i) => {
+        setCurrentPage(i);
+    };
+
     const handleFilterSelect = (item) => {
         setSelectedProf(item);
     };
 
     const handleClearFilterSelect = () => {
         setSelectedProf();
+    };
+
+    // Sort table
+    const handleSortTable = (item) => {
+        setSortBy((prevState) => ({
+            iter: item,
+            order: prevState.order === "asc" ? "desc" : "asc"
+        }));
     };
 
     useEffect(() => {
@@ -92,27 +101,12 @@ const Users = ({ users, onDelete, onToogle }) => {
                     <div className="col col-sm-12 col-lg-8">
                         <SearchStatus length={count} />
                         {count > 0 && (
-                            <table className="table">
-                                <thead>
-                                    <tr>
-                                        {tableHead.map((h) => (
-                                            <th scope="col" key={h}>
-                                                {h}
-                                            </th>
-                                        ))}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {usersCrop.map((user) => (
-                                        <User
-                                            key={user._id}
-                                            {...user}
-                                            remove={onDelete}
-                                            onToogle={onToogle}
-                                        />
-                                    ))}
-                                </tbody>
-                            </table>
+                            <Table
+                                users={usersCrop}
+                                onDelete={onDelete}
+                                onToogle={onToogle}
+                                onSort={handleSortTable}
+                            />
                         )}
                         <Pagination
                             itemsCount={count}
