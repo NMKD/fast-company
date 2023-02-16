@@ -5,17 +5,6 @@ import api from "./api/index";
 const App = () => {
     const [users, setUsers] = useState([]);
 
-    async function fetchData() {
-        try {
-            const apiUsers = await api.users.fetchAll();
-            setUsers(apiUsers);
-        } catch (error) {
-            throw new Error(
-                "error when mounting the component App when fetchData to api/users"
-            );
-        }
-    }
-
     const handleDelete = (userId) =>
         setUsers((prevState) => prevState.filter((d) => d._id !== userId));
 
@@ -32,6 +21,16 @@ const App = () => {
     };
 
     useState(() => {
+        async function fetchData() {
+            try {
+                const apiUsers = await api.users.fetchAll();
+                setUsers(apiUsers);
+            } catch (error) {
+                throw new Error(
+                    "error when mounting the component App when fetchData to api/users"
+                );
+            }
+        }
         fetchData();
     }, [users]);
 

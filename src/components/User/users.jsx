@@ -16,7 +16,7 @@ const Users = ({ users, onDelete, onToogle }) => {
     // professions/api/filter
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
-    const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
+    const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
 
     const filterredUsers = selectedProf
         ? users.filter(
@@ -30,23 +30,13 @@ const Users = ({ users, onDelete, onToogle }) => {
 
     const sortedUsers = _.orderBy(
         filterredUsers,
-        [sortBy.iter],
+        [sortBy.path],
         [sortBy.order]
     );
 
     // Pagination/ отображение пользователей / фильтр
     const usersCrop = paginate(sortedUsers, currentPage, pageSize);
 
-    async function fetchData() {
-        try {
-            const newProf = await api.professions.fetchAll();
-            setProfessions(newProf);
-        } catch (error) {
-            throw new Error(
-                "error when mounting the component GroupList in Users"
-            );
-        }
-    }
     // Pagination
     const handlePageChange = (i) => {
         setCurrentPage(i);
@@ -62,10 +52,7 @@ const Users = ({ users, onDelete, onToogle }) => {
 
     // Sort table
     const handleSortTable = (item) => {
-        setSortBy((prevState) => ({
-            iter: item,
-            order: prevState.order === "asc" ? "desc" : "asc"
-        }));
+        setSortBy(item);
     };
 
     useEffect(() => {
@@ -73,6 +60,16 @@ const Users = ({ users, onDelete, onToogle }) => {
     }, [selectedProf]);
 
     useEffect(() => {
+        async function fetchData() {
+            try {
+                const newProf = await api.professions.fetchAll();
+                setProfessions(newProf);
+            } catch (error) {
+                throw new Error(
+                    "error when mounting the component GroupList in Users"
+                );
+            }
+        }
         fetchData();
         setCurrentPage(1);
     }, [professions]);
@@ -103,15 +100,14 @@ const Users = ({ users, onDelete, onToogle }) => {
                         {count > 0 && (
                             <Table
                                 users={usersCrop}
-                                onDelete={onDelete}
-                                onToogle={onToogle}
+                                {...{ onDelete, onToogle }}
                                 onSort={handleSortTable}
+                                currentSort={sortBy}
                             />
                         )}
                         <Pagination
                             itemsCount={count}
-                            pageSize={pageSize}
-                            currentPage={currentPage}
+                            {...{ pageSize, currentPage }}
                             onPageChange={handlePageChange}
                         />
                     </div>
