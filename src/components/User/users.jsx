@@ -14,7 +14,11 @@ const Users = () => {
     // professions/api/filter
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
-    const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
+    const [sortBy, setSortBy] = useState({
+        path: "name",
+        order: "asc",
+        ative: false
+    });
     // Pagination/
     const pageSize = 6;
     const [currentPage, setCurrentPage] = useState(1);

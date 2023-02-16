@@ -1,30 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import IconsCaret from "./iconsCaret";
 
 const TableHeader = ({ currentSort, onSort, columns }) => {
+    const newColumns = Object.values(columns);
+    const [activeColumn, setActiveColumn] = useState([...newColumns]);
+
     const handleSort = (item) => {
         onSort({
             path: item,
             order: currentSort.order === "asc" ? "desc" : "asc"
         });
+        setActiveColumn(
+            activeColumn.map((col) => ({
+                ...col,
+                active: col.path === item && (col.active = true)
+            }))
+        );
     };
+
     return (
         <>
             <thead>
                 <tr>
-                    {Object.keys(columns).map((column) => (
-                        <th
-                            key={column}
-                            onClick={
-                                columns[column].path
-                                    ? () => handleSort(columns[column].path)
-                                    : undefined
-                            }
-                            {...{ role: columns[column].path && "button" }}
-                            scope="col"
-                        >
-                            {columns[column].name}
-                        </th>
+                    {activeColumn.map((col) => (
+                        <>
+                            <th
+                                key={col.name}
+                                onClick={
+                                    col.path
+                                        ? () => handleSort(col.path)
+                                        : undefined
+                                }
+                                {...{ role: col.path && "button" }}
+                                scope="col"
+                            >
+                                {col.name}
+                                <IconsCaret
+                                    {...{ currentSort }}
+                                    active={col.active}
+                                />
+                            </th>
+                        </>
                     ))}
                 </tr>
             </thead>

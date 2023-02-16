@@ -11,7 +11,10 @@ const TableUsers = ({ users, onDelete, onToogle, currentSort, onSort }) => {
             name: "Качества",
             component: (user) => <QualitieList qualities={user.qualities} />
         },
-        profession: { path: "profession.name", name: "Профессия" },
+        profession: {
+            path: "profession.name",
+            name: "Профессия"
+        },
         completedMeetings: {
             path: "completedMeetings",
             name: "Встретился, раз"
