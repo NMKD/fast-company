@@ -7,6 +7,7 @@ const TableHeader = ({ currentSort, onSort, columns }) => {
     const [activeColumn, setActiveColumn] = useState([...newColumns]);
 
     const handleSort = (item) => {
+        if (item === null) return;
         onSort({
             path: item,
             order: currentSort.order === "asc" ? "desc" : "asc"
