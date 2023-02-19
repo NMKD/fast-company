@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const IconsCaret = ({ currentSort, active }) => {
+const IconsCaret = ({ currentSort }) => {
     return (
         <>
-            {active && (
+            {currentSort.path && (
                 <i
                     className={
                         "bi bi-caret-" +
@@ -17,8 +17,7 @@ const IconsCaret = ({ currentSort, active }) => {
 };
 
 IconsCaret.propTypes = {
-    currentSort: PropTypes.object.isRequired,
-    active: PropTypes.bool
+    currentSort: PropTypes.object.isRequired
 };
 
 export default IconsCaret;

@@ -1,46 +1,41 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import IconsCaret from "./iconsCaret";
 
 const TableHeader = ({ currentSort, onSort, columns }) => {
-    const newColumns = Object.values(columns);
-    const [activeColumn, setActiveColumn] = useState([...newColumns]);
+    const columnsToArray = Object.values(columns);
 
-    const handleSort = (item) => {
-        if (item === null) return;
+    const getActiveColumn = (currentSort, currentPath) => {
+        if (currentPath === null) return;
+        if (currentSort.path === currentPath) {
+            return <IconsCaret {...{ currentSort }} />;
+        }
+    };
+
+    const handleSort = (currentPath) => {
+        if (currentPath === null) return;
         onSort({
-            path: item,
+            path: currentPath,
             order: currentSort.order === "asc" ? "desc" : "asc"
         });
-        setActiveColumn(
-            activeColumn.map((col) => ({
-                ...col,
-                active: col.path === item && (col.active = true)
-            }))
-        );
     };
 
     return (
         <>
             <thead>
                 <tr>
-                    {activeColumn.map((col) => (
+                    {columnsToArray.map((col, i) => (
                         <>
                             <th
-                                key={col.name}
+                                key={`${col.name}${i}`.toString()}
                                 onClick={
-                                    col.path
-                                        ? () => handleSort(col.path)
-                                        : undefined
+                                    col.path ? () => handleSort(col.path) : null
                                 }
                                 {...{ role: col.path && "button" }}
                                 scope="col"
                             >
                                 {col.name}
-                                <IconsCaret
-                                    {...{ currentSort }}
-                                    active={col.active}
-                                />
+                                {getActiveColumn(currentSort, col.path)}
                             </th>
                         </>
                     ))}
