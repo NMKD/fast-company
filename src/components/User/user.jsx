@@ -14,7 +14,7 @@ const User = ({ id }) => {
                 setUser(apiUser);
             } catch (error) {
                 throw new Error(
-                    "error when mounting the component App when fetchData to api/users"
+                    "error when mounting the component User when fetchData to api/users"
                 );
             }
         }
