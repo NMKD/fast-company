@@ -86,7 +86,7 @@ const UsersList = () => {
                 setUsers(apiUsers);
             } catch (error) {
                 throw new Error(
-                    "error when mounting the component App when fetchData to api/users"
+                    "error when mounting the component usersList when fetchData to api/users"
                 );
             }
         }
