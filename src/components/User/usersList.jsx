@@ -1,14 +1,14 @@
 /* eslint-disable indent */
 import React, { useState, useEffect } from "react";
-import SearchStatus from "./searchStatus";
-import Pagination from "./pagination";
+import SearchStatus from "../User/searchStatus";
+import Pagination from "../User/pagination";
 import paginate from "../../utils/paginate";
-import GroupList from "./groupList";
-import TableUsers from "./tableUsers";
+import GroupList from "../User/groupList";
+import TableUsers from "../User/tableUsers";
 import _ from "lodash";
 import api from "../../api";
 
-const Users = () => {
+const UsersList = () => {
     // professions/api/users
     const [users, setUsers] = useState([]);
     // professions/api/filter
@@ -108,6 +108,10 @@ const Users = () => {
         setCurrentPage(1);
     }, [professions]);
 
+    if (users.length === 0) {
+        return <h2>Loading...</h2>;
+    }
+
     return (
         <>
             <div className="container pt-4">
@@ -152,4 +156,4 @@ const Users = () => {
     );
 };
 
-export default Users;
+export default UsersList;
