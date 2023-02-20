@@ -25,19 +25,17 @@ const TableHeader = ({ currentSort, onSort, columns }) => {
             <thead>
                 <tr>
                     {columnsToArray.map((col, i) => (
-                        <>
-                            <th
-                                key={`${col.path}${i}`.toString()}
-                                onClick={
-                                    col.path ? () => handleSort(col.path) : null
-                                }
-                                {...{ role: col.path && "button" }}
-                                scope="col"
-                            >
-                                {col.name}
-                                {getActiveColumn(currentSort, col.path)}
-                            </th>
-                        </>
+                        <th
+                            key={`${col.path}${i}`.toString()}
+                            onClick={
+                                col.path ? () => handleSort(col.path) : null
+                            }
+                            {...{ role: col.path && "button" }}
+                            scope="col"
+                        >
+                            {col.name}
+                            {getActiveColumn(currentSort, col.path)}
+                        </th>
                     ))}
                 </tr>
             </thead>
