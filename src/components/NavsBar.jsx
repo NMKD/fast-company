@@ -4,18 +4,18 @@ const NavsBar = () => {
     return (
         <>
             <ul className="nav">
-                <li className="nav-item">
-                    <Link className="nav-link active" to="/">
+                <li className="nav-item m-2">
+                    <Link className="nav-link" to="/">
                         Main
                     </Link>
                 </li>
-                <li className="nav-item">
-                    <Link className="nav-link active" to="/singin">
+                <li className="nav-item m-2">
+                    <Link className="nav-link" to="/singin">
                         SingIn
                     </Link>
                 </li>
-                <li className="nav-item">
-                    <Link className="nav-link active" to="/users">
+                <li className="nav-item m-2">
+                    <Link className="nav-link" to="/users">
                         Users
                     </Link>
                 </li>

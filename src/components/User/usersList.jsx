@@ -5,6 +5,7 @@ import Pagination from "../User/pagination";
 import paginate from "../../utils/paginate";
 import GroupList from "../User/groupList";
 import TableUsers from "../User/tableUsers";
+import SearchInput from "../Form/searchInput";
 import _ from "lodash";
 import api from "../../api";
 
@@ -135,6 +136,7 @@ const UsersList = () => {
                     </div>
                     <div className="col col-sm-12 col-lg-8">
                         <SearchStatus length={count} />
+                        <SearchInput />
                         {count > 0 && (
                             <TableUsers
                                 users={usersCrop}
