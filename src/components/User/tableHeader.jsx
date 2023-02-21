@@ -26,7 +26,7 @@ const TableHeader = ({ currentSort, onSort, columns }) => {
                 <tr>
                     {columnsToArray.map((col, i) => (
                         <th
-                            key={`${col.path}${i}`.toString()}
+                            key={`${col.path}-${i}`}
                             onClick={
                                 col.path ? () => handleSort(col.path) : null
                             }

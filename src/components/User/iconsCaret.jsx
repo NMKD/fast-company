@@ -4,14 +4,12 @@ import PropTypes from "prop-types";
 const IconsCaret = ({ currentSort }) => {
     return (
         <>
-            {currentSort.path && (
-                <i
-                    className={
-                        "bi bi-caret-" +
-                        (currentSort.order === "asc" ? "down-fill" : "up-fill")
-                    }
-                ></i>
-            )}
+            <i
+                className={
+                    "bi bi-caret-" +
+                    (currentSort.order === "asc" ? "down-fill" : "up-fill")
+                }
+            ></i>
         </>
     );
 };
