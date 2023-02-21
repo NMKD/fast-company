@@ -6,7 +6,6 @@ import _ from "lodash";
 const TableBody = ({ data, columns }) => {
     const renderContent = (item, col) => {
         if (item[columns[col].path] === item.name) {
-            console.log(item[columns[col].path]);
             return (
                 <Link to={`users/${item._id}`}>{item[columns[col].path]}</Link>
             );
