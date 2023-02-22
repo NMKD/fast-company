@@ -6,6 +6,7 @@ import paginate from "../../utils/paginate";
 import GroupList from "../User/groupList";
 import TableUsers from "../User/tableUsers";
 import SearchInput from "../Form/searchInput";
+import { search } from "../../utils/search";
 import _ from "lodash";
 import api from "../../api";
 
@@ -24,6 +25,9 @@ const UsersList = () => {
     const pageSize = 6;
     const [currentPage, setCurrentPage] = useState(1);
 
+    // search users
+    const [searchInput, setSearchInput] = useState("");
+
     const filterredUsers = selectedProf
         ? users.filter(
               (user) =>
@@ -40,8 +44,16 @@ const UsersList = () => {
         [sortBy.order]
     );
 
+    const includedUsers = search(searchInput, sortedUsers);
     // Pagination/ отображение пользователей / фильтр
-    const usersCrop = paginate(sortedUsers, currentPage, pageSize);
+    const usersCrop = paginate(includedUsers, currentPage, pageSize);
+
+    // Search
+    const handleChangeSearch = ({ target }) => {
+        const { value } = target;
+        setSearchInput(value);
+        setSelectedProf();
+    };
 
     // Pagination
     const handlePageChange = (i) => {
@@ -50,6 +62,7 @@ const UsersList = () => {
 
     const handleFilterSelect = (item) => {
         setSelectedProf(item);
+        setSearchInput("");
     };
 
     const handleClearFilterSelect = () => {
@@ -136,7 +149,10 @@ const UsersList = () => {
                     </div>
                     <div className="col col-sm-12 col-lg-8">
                         <SearchStatus length={count} />
-                        <SearchInput />
+                        <SearchInput
+                            value={searchInput}
+                            onChange={handleChangeSearch}
+                        />
                         {count > 0 && (
                             <TableUsers
                                 users={usersCrop}
