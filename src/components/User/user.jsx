@@ -10,7 +10,6 @@ const User = ({ id }) => {
         async function fetchData() {
             try {
                 const apiUser = await api.users.getById(id);
-                console.log(apiUser);
                 setUser(apiUser);
             } catch (error) {
                 throw new Error(
