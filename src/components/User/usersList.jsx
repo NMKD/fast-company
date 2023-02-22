@@ -163,7 +163,7 @@ const UsersList = () => {
                             />
                         )}
                         <Pagination
-                            itemsCount={count}
+                            itemsCount={includedUsers.length}
                             {...{ pageSize, currentPage }}
                             onPageChange={handlePageChange}
                         />
