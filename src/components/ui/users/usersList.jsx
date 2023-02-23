@@ -1,13 +1,13 @@
 /* eslint-disable indent */
 import React, { useState, useEffect } from "react";
-import SearchStatus from "../User/searchStatus";
-import Pagination from "../User/pagination";
-import paginate from "../../utils/paginate";
-import GroupList from "../User/groupList";
-import TableUsers from "../User/tableUsers";
-import SearchInput from "../Form/searchInput";
+import SearchStatus from "../../ui/searchStatus";
+import Pagination from "../../common/pagination";
+import paginate from "../../../utils/paginate";
+import GroupList from "../../common/groupList";
+import TableUsers from "../users/tableUsers";
+import SearchInput from "../../common/form/fields/searchInput";
 import _ from "lodash";
-import api from "../../api";
+import api from "../../../api";
 
 const UsersList = () => {
     // professions/api/users

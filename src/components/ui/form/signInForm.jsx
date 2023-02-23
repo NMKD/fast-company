@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import TextField from "../Form/textField";
-import { validate } from "../../utils/validate";
-import { validationSchema } from "../../utils/validationSchema";
-const SingIn = () => {
+import TextField from "../../common/form/fields/textField";
+import { validate } from "../../../utils/validate";
+import { validationSchema } from "../../../utils/validationSchema";
+
+const SingInForm = () => {
     const [data, setData] = useState({ email: "", password: "" });
     const { email, password } = data;
     const [errors, setErrors] = useState({});
@@ -64,4 +65,4 @@ const SingIn = () => {
     );
 };
 
-export default SingIn;
+export default SingInForm;
