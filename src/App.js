@@ -1,7 +1,7 @@
 import React from "react";
-import Users from "./components/layouts/users";
-import Main from "./components/layouts/main";
-import SingIn from "./components/layouts/singIn";
+import Users from "./components/pages/users";
+import Main from "./components/pages/main";
+import SingIn from "./components/pages/singIn";
 import NavsBar from "./components/NavsBar";
 import { Route, Switch } from "react-router-dom";
 

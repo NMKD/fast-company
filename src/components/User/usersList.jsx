@@ -6,7 +6,6 @@ import paginate from "../../utils/paginate";
 import GroupList from "../User/groupList";
 import TableUsers from "../User/tableUsers";
 import SearchInput from "../Form/searchInput";
-import { search } from "../../utils/search";
 import _ from "lodash";
 import api from "../../api";
 
@@ -28,7 +27,11 @@ const UsersList = () => {
     // search users
     const [searchInput, setSearchInput] = useState("");
 
-    const filterredUsers = selectedProf
+    const filterredUsers = searchInput
+        ? users.filter((user) =>
+              user.name.toLowerCase().includes(searchInput.toLowerCase())
+          )
+        : selectedProf
         ? users.filter(
               (user) =>
                   JSON.stringify(user.profession) ===
@@ -44,9 +47,8 @@ const UsersList = () => {
         [sortBy.order]
     );
 
-    const includedUsers = search(searchInput, sortedUsers);
     // Pagination/ отображение пользователей / фильтр
-    const usersCrop = paginate(includedUsers, currentPage, pageSize);
+    const usersCrop = paginate(sortedUsers, currentPage, pageSize);
 
     // Search
     const handleChangeSearch = ({ target }) => {
@@ -163,7 +165,7 @@ const UsersList = () => {
                             />
                         )}
                         <Pagination
-                            itemsCount={includedUsers.length}
+                            itemsCount={count}
                             {...{ pageSize, currentPage }}
                             onPageChange={handlePageChange}
                         />
