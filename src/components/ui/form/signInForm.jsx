@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import TextField from "../../common/form/fields/textField";
+import TextField from "./fields/textField";
 import { validate } from "../../../utils/validate";
 import { validationSchema } from "../../../utils/validationSchema";
 
@@ -45,7 +45,7 @@ const SingInForm = () => {
                 errors={errors.password}
             />
             <button
-                className="btn btn-success mt-2"
+                className="btn btn-success mt-3 mb-3"
                 type="submit"
                 disabled={isValid}
             >

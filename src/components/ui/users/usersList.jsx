@@ -1,11 +1,11 @@
 /* eslint-disable indent */
 import React, { useState, useEffect } from "react";
-import SearchStatus from "../../ui/searchStatus";
-import Pagination from "../../common/pagination";
+import SearchStatus from "../table/heading/searchStatus";
+import Pagination from "../table/pagination/pagination";
 import paginate from "../../../utils/paginate";
-import GroupList from "../../common/groupList";
-import TableUsers from "../users/tableUsers";
-import SearchInput from "../../common/form/fields/searchInput";
+import GroupList from "./professions/groupList";
+import TableList from "../table/tableList";
+import SearchInput from "../form/fields/searchInput";
 import _ from "lodash";
 import api from "../../../api";
 
@@ -156,7 +156,7 @@ const UsersList = () => {
                             onChange={handleChangeSearch}
                         />
                         {count > 0 && (
-                            <TableUsers
+                            <TableList
                                 users={usersCrop}
                                 onDelete={handleDelete}
                                 onToogle={handleToogleBookMark}

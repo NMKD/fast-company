@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import IconsCaret from "../../ui/iconsCaret";
+import IconsCaret from "./iconsCaret";
 
 const TableHeader = ({ currentSort, onSort, columns }) => {
     const columnsToArray = Object.values(columns);

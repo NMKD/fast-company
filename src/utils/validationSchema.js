@@ -15,5 +15,10 @@ export const validationSchema = {
             message:
                 "Пароль должен быть не менее 8 символов, содержать (A-z, 0-9) и один из символов (!#$%&?)"
         }
+    },
+    profession: {
+        isRequired: {
+            message: "Пожалуйста выберите профессию"
+        }
     }
 };

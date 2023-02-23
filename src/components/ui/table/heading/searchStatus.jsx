@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import findNumber from "../../utils/binarySearch";
+import findNumber from "../../../../utils/binarySearch";
 const SearchStatus = ({ length }) => {
     const numbers = [2, 3, 4, 22, 23, 24, 32, 33, 34, 42, 43, 44];
     const renderPhrase = (number) => {

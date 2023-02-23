@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Table from "../../common/table/table";
-import BookMark from "../../common/bookmark";
-import QualitieList from "../../ui/qualities/qualitieList";
+import Table from "./table";
+import BookMark from "./bookmark/bookmark";
+import QualitieList from "../qualities/qualitieList";
 import { Link } from "react-router-dom";
 
-const TableUsers = ({ users, onDelete, onToogle, currentSort, onSort }) => {
+const TableList = ({ users, onDelete, onToogle, currentSort, onSort }) => {
     const columns = {
         name: {
             path: "name",
@@ -56,7 +56,7 @@ const TableUsers = ({ users, onDelete, onToogle, currentSort, onSort }) => {
     );
 };
 
-TableUsers.propTypes = {
+TableList.propTypes = {
     users: PropTypes.array.isRequired,
     onDelete: PropTypes.func.isRequired,
     onToogle: PropTypes.func.isRequired,
@@ -64,4 +64,4 @@ TableUsers.propTypes = {
     onSort: PropTypes.func.isRequired
 };
 
-export default TableUsers;
+export default TableList;
