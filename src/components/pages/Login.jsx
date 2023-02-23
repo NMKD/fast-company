@@ -13,11 +13,11 @@ const Login = () => {
                     <div className="col col-md-6 col-lg-6 offset-md-3 offset-lg-3 shadow p-5">
                         {type === "signup" ? (
                             <>
-                                <h3 className="text-center">Sing up</h3>
+                                <h3 className="text-center">Sign up</h3>
                                 <SignUpForm />
                                 <p>
                                     Already have account?{" "}
-                                    <Link to={"/login/signin"}>Sing in</Link>
+                                    <Link to={"/login/signin"}>Sign in</Link>
                                 </p>
                             </>
                         ) : (
