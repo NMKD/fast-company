@@ -28,40 +28,30 @@ const SingInForm = () => {
     }, [data]);
 
     return (
-        <div className="container">
-            <div className="row mt-5">
-                <div className="col col-md-6 col-lg-6 offset-md-3 offset-lg-3 shadow p-5">
-                    <h3 className="text-center">SingIn</h3>
-                    <form
-                        className="g-3 needs-validation"
-                        onSubmit={handleSubmit}
-                    >
-                        <TextField
-                            label="Почта"
-                            name="email"
-                            value={email}
-                            onChange={handleChangeData}
-                            errors={errors.email}
-                        />
-                        <TextField
-                            label="Пароль"
-                            type="password"
-                            name="password"
-                            value={password}
-                            onChange={handleChangeData}
-                            errors={errors.password}
-                        />
-                        <button
-                            className="btn btn-success mt-2"
-                            type="submit"
-                            disabled={isValid}
-                        >
-                            Отправить
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
+        <form className="g-3 needs-validation" onSubmit={handleSubmit}>
+            <TextField
+                label="Почта"
+                name="email"
+                value={email}
+                onChange={handleChangeData}
+                errors={errors.email}
+            />
+            <TextField
+                label="Пароль"
+                type="password"
+                name="password"
+                value={password}
+                onChange={handleChangeData}
+                errors={errors.password}
+            />
+            <button
+                className="btn btn-success mt-2"
+                type="submit"
+                disabled={isValid}
+            >
+                Отправить
+            </button>
+        </form>
     );
 };
 

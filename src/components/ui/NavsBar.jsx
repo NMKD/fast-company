@@ -10,8 +10,8 @@ const NavsBar = () => {
                     </Link>
                 </li>
                 <li className="nav-item m-2">
-                    <Link className="nav-link" to="/singin">
-                        SingIn
+                    <Link className="nav-link" to="/login/singin">
+                        Sign In
                     </Link>
                 </li>
                 <li className="nav-item m-2">
