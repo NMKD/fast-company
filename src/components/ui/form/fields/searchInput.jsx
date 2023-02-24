@@ -18,7 +18,7 @@ const SearchInput = ({ value, onChange }) => {
 
 SearchInput.propTypes = {
     value: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func
 };
 
 export default SearchInput;

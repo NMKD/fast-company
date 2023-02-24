@@ -47,9 +47,13 @@ export const validate = (values, config) => {
 /* eslint-disable indent */
 const validator = (ruleName, value) => {
     switch (ruleName) {
-        case "isRequired":
-            return isRequiredField(value);
-
+        case "isRequired": {
+            if (typeof value === "boolean") {
+                return value;
+            } else {
+                return isRequiredField(value);
+            }
+        }
         case "isEmail":
             return isEmail(value);
 

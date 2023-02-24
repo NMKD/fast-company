@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
-import SignUpForm from "../ui/form/SignUpForm";
+import SignUpForm from "../ui/form/signUpForm";
 import SignInForm from "../ui/form/signInForm";
 
 const Login = () => {

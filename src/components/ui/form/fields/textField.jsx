@@ -11,8 +11,11 @@ const TextField = ({ label, type, name, value, onChange, errors }) => {
     const getInputClasses = () => {
         return "form-control " + (errors ? "is-invalid" : "");
     };
+    const handleChangeData = ({ target }) => {
+        onChange({ name: target.name, value: target.value });
+    };
     return (
-        <div className="mb-2 mb-md-3">
+        <div className="mb-3">
             <label className="form-label" htmlFor={name}>
                 {label}
             </label>
@@ -23,7 +26,7 @@ const TextField = ({ label, type, name, value, onChange, errors }) => {
                     name={name}
                     value={value}
                     id={name}
-                    onChange={onChange}
+                    onChange={handleChangeData}
                     required
                 />
                 {type === "password" && (

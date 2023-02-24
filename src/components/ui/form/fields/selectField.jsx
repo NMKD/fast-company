@@ -1,7 +1,8 @@
+/* eslint-disable indent */
 import React from "react";
 import PropTypes from "prop-types";
 
-const Select = ({
+const SelectField = ({
     label,
     defaulOption,
     name,
@@ -13,25 +14,35 @@ const Select = ({
     const getInputClasses = () => {
         return "form-control " + (error ? "is-invalid" : "");
     };
+    const optionsArray =
+        typeof options === "object"
+            ? Object.keys(options).map((opt) => ({
+                  name: options[opt].name,
+                  value: options[opt].value
+              }))
+            : options;
+    const handleChangeData = ({ target }) => {
+        onChange({ name: target.name, value: target.value });
+    };
     return (
-        <div className="mb-2 mb-md-3">
+        <div className="mb-3">
             <label htmlFor="profession" className="form-label">
                 {label}
             </label>
             <select
                 className={getInputClasses()}
-                onChange={onChange}
+                onChange={handleChangeData}
                 name={name}
                 value={value}
             >
                 <option disabled value="">
                     {defaulOption}
                 </option>
-                {options &&
-                    options.map((prof) => (
+                {optionsArray &&
+                    optionsArray.map((prof) => (
                         <option
                             selected={prof.name === value}
-                            key={prof._id}
+                            key={prof.name}
                             value={prof.name}
                         >
                             {prof.name}
@@ -43,14 +54,14 @@ const Select = ({
     );
 };
 
-Select.propTypes = {
+SelectField.propTypes = {
     label: PropTypes.string.isRequired,
     defaulOption: PropTypes.string.isRequired,
-    options: PropTypes.array,
+    options: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string.isRequired,
     error: PropTypes.string,
     name: PropTypes.string.isRequired
 };
 
-export default Select;
+export default SelectField;

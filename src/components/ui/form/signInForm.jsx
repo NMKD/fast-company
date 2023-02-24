@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
 import TextField from "./fields/textField";
+import CheckBoxField from "./fields/checkBoxField";
 import { validate } from "../../../utils/validate";
 import { validationSchema } from "../../../utils/validationSchema";
 
 const SingInForm = () => {
-    const [data, setData] = useState({ email: "", password: "" });
-    const { email, password } = data;
+    const [data, setData] = useState({
+        email: "",
+        password: "",
+        stayOn: true
+    });
+    const { email, password, stayOn } = data;
     const [errors, setErrors] = useState({});
     const isValid = Object.keys(errors).length !== 0;
 
@@ -14,11 +19,10 @@ const SingInForm = () => {
         console.log(data);
     };
 
-    const handleChangeData = ({ target }) => {
-        const { name, value } = target;
+    const handleChangeData = (target) => {
         setData((prevState) => ({
             ...prevState,
-            [name]: value
+            [target.name]: target.value
         }));
     };
 
@@ -44,6 +48,7 @@ const SingInForm = () => {
                 onChange={handleChangeData}
                 errors={errors.password}
             />
+
             <button
                 className="btn btn-success mt-3 mb-3"
                 type="submit"
@@ -51,6 +56,14 @@ const SingInForm = () => {
             >
                 Отправить
             </button>
+
+            <CheckBoxField
+                value={stayOn}
+                onChange={handleChangeData}
+                name="licence"
+            >
+                Оставаться в системе
+            </CheckBoxField>
         </form>
     );
 };

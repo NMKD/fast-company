@@ -20,5 +20,10 @@ export const validationSchema = {
         isRequired: {
             message: "Пожалуйста выберите профессию"
         }
+    },
+    licence: {
+        isRequired: {
+            message: "Пожалуйста примите лицензионное соглашение"
+        }
     }
 };
