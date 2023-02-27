@@ -1,3 +1,14 @@
+import { object, string } from "yup";
+export const yupValidationSingIn = object({
+    password: string().matches(
+        /^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$/,
+        "Пароль должен быть не менее 8 символов, содержать (A-z, 0-9) и один из символов (!#$%&?)"
+    ),
+    email: string()
+        .required("Электронная почта обязательна для заполнения")
+        .email("Электронная почта заполнена некорректно")
+});
+
 export const validationSchema = {
     email: {
         isRequired: {

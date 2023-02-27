@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TextField from "./fields/textField";
 import CheckBoxField from "./fields/checkBoxField";
-import { validate } from "../../../utils/validate";
-import { validationSchema } from "../../../utils/validationSchema";
+import { yupValidationSingIn } from "../../../utils/validationSchema";
 
 const SingInForm = () => {
     const [data, setData] = useState({
@@ -27,8 +26,10 @@ const SingInForm = () => {
     };
 
     useEffect(() => {
-        const errors = validate(data, validationSchema);
-        setErrors(errors);
+        yupValidationSingIn
+            .validate(data)
+            .then(() => setErrors({}))
+            .catch((err) => setErrors({ [err.path]: err.message }));
     }, [data]);
 
     return (

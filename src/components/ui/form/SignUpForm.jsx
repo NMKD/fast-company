@@ -103,6 +103,7 @@ const SignUpForm = () => {
             <MultiSelectField
                 label="Выбрать качества:"
                 options={qualities}
+                defaultValue={data.qualities}
                 name="qualities"
                 onChange={handleChangeData}
             />

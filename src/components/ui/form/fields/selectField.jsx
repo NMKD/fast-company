@@ -26,10 +26,11 @@ const SelectField = ({
     };
     return (
         <div className="mb-3">
-            <label htmlFor="profession" className="form-label">
+            <label htmlFor={name} className="form-label">
                 {label}
             </label>
             <select
+                id={name}
                 className={getInputClasses()}
                 onChange={handleChangeData}
                 name={name}
@@ -41,8 +42,7 @@ const SelectField = ({
                 {optionsArray &&
                     optionsArray.map((prof) => (
                         <option
-                            selected={prof.name === value}
-                            key={prof.name}
+                            key={prof.name + "_" + prof.value}
                             value={prof.name}
                         >
                             {prof.name}
@@ -61,7 +61,7 @@ SelectField.propTypes = {
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string.isRequired,
     error: PropTypes.string,
-    name: PropTypes.string.isRequired
+    name: PropTypes.string
 };
 
 export default SelectField;
