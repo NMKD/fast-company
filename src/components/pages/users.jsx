@@ -4,9 +4,8 @@ import User from "../ui/users/user";
 import UsersList from "../ui/users/usersList";
 
 const Users = () => {
-    const params = useParams();
-    const { id } = params;
-    return <>{id ? <User id={id} /> : <UsersList />}</>;
+    const { id } = useParams();
+    return <>{id ? <User userId={id} /> : <UsersList />}</>;
 };
 
 export default Users;
