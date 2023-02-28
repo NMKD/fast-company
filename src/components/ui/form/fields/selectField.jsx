@@ -14,13 +14,15 @@ const SelectField = ({
     const getInputClasses = () => {
         return "form-control " + (error ? "is-invalid" : "");
     };
-    const optionsArray =
+
+    const profession =
         typeof options === "object"
             ? Object.keys(options).map((opt) => ({
                   name: options[opt].name,
                   value: options[opt].value
               }))
             : options;
+
     const handleChangeData = ({ target }) => {
         onChange({ name: target.name, value: target.value });
     };
@@ -39,8 +41,8 @@ const SelectField = ({
                 <option disabled value="">
                     {defaulOption}
                 </option>
-                {optionsArray &&
-                    optionsArray.map((prof) => (
+                {profession &&
+                    profession.map((prof) => (
                         <option
                             key={prof.name + "_" + prof.value}
                             value={prof.name}
@@ -59,7 +61,7 @@ SelectField.propTypes = {
     defaulOption: PropTypes.string.isRequired,
     options: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     onChange: PropTypes.func.isRequired,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.string,
     error: PropTypes.string,
     name: PropTypes.string
 };

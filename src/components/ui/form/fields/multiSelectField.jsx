@@ -12,6 +12,14 @@ const MultiSelectField = ({ options, onChange, label, name, defaultValue }) => {
               }))
             : options;
 
+    const defaultValueArray =
+        typeof defaultValue === "object"
+            ? Object.keys(defaultValue).map((opt) => ({
+                  label: defaultValue[opt].name,
+                  value: defaultValue[opt]._id
+              }))
+            : defaultValue;
+
     const handleChange = (value) => {
         onChange({ name, value });
     };
@@ -28,7 +36,7 @@ const MultiSelectField = ({ options, onChange, label, name, defaultValue }) => {
                 classNamePrefix="select"
                 className="basic-multi-select"
                 onChange={handleChange}
-                defaultValue={defaultValue}
+                defaultValue={defaultValueArray}
                 name={name}
             />
         </div>

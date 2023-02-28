@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React, { useState, useEffect } from "react";
 import api from "../../../api";
 import TextField from "./fields/textField";
@@ -9,18 +10,12 @@ import RadioField from "./fields/radioField";
 const FormUser = ({ user }) => {
     const [userSate, setUser] = useState(user);
     const [professions, setProfessions] = useState([]);
+    const [qualities, setQualities] = useState({});
     const radioOptions = [
         { name: "Male", value: "male" },
         { name: "Female", value: "female" },
         { name: "Other", value: "other" }
     ];
-    // const [data, setData] = useState({
-    //     name: "",
-    //     email: "",
-    //     profession: "",
-    //     sex: "male",
-    //     qualities: []
-    // });
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -28,17 +23,16 @@ const FormUser = ({ user }) => {
     };
 
     const handleChangeData = (target) => {
-        console.log(userSate);
         setUser((prevState) => ({
             ...prevState,
             [target.name]: target.value
         }));
+        console.log(userSate);
     };
     useEffect(() => {
         async function fetchData() {
             try {
-                const newProf = await api.professions.fetchAll();
-                setProfessions(newProf);
+                setProfessions(await api.professions.fetchAll());
             } catch (error) {
                 throw new Error(
                     "error when mounting the component SignUpForm in ui/form"
@@ -47,6 +41,19 @@ const FormUser = ({ user }) => {
         }
         fetchData();
     }, [professions]);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                setQualities(await api.qualities.fetchAll());
+            } catch (error) {
+                throw new Error(
+                    "error when mounting the component SignUpForm in ui/form"
+                );
+            }
+        }
+        fetchData();
+    }, [qualities]);
 
     return (
         <>
@@ -80,10 +87,10 @@ const FormUser = ({ user }) => {
                 />
                 <MultiSelectField
                     label="Выбрать качества:"
-                    options={userSate.qualities}
+                    options={qualities}
                     name="qualities"
                     onChange={handleChangeData}
-                    value={[]}
+                    defaultValue={userSate.qualities}
                 />
             </form>
         </>
