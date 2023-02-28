@@ -1,5 +1,6 @@
 /* eslint-disable indent */
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import api from "../../../api";
 import TextField from "./fields/textField";
 import PropTypes from "prop-types";
@@ -8,7 +9,8 @@ import MultiSelectField from "./fields/multiSelectField";
 import RadioField from "./fields/radioField";
 
 const FormUser = ({ user }) => {
-    const [userSate, setUser] = useState(user);
+    const history = useHistory();
+    const [userState, setUser] = useState(user);
     const [professions, setProfessions] = useState([]);
     const [qualities, setQualities] = useState({});
     const radioOptions = [
@@ -17,9 +19,35 @@ const FormUser = ({ user }) => {
         { name: "Other", value: "other" }
     ];
 
+    const getProfession = (name) => {
+        const i = professions.findIndex(
+            (prof) => prof.name.toLowerCase() === name.toLowerCase()
+        );
+        return professions[i];
+    };
+
+    const getQualities = (qualities) => {
+        const arrayQualities = [];
+        userState.qualities.forEach((item) =>
+            Object.keys(qualities).forEach((opt) => {
+                if (qualities[opt]._id === item.value) {
+                    arrayQualities.push(qualities[opt]);
+                }
+            })
+        );
+
+        return arrayQualities;
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(userSate);
+        api.users
+            .update(user._id, {
+                ...userState,
+                profession: getProfession(userState.profession),
+                qualities: getQualities(qualities)
+            })
+            .then((data) => history.push(`/users/${data._id}`));
     };
 
     const handleChangeData = (target) => {
@@ -27,8 +55,8 @@ const FormUser = ({ user }) => {
             ...prevState,
             [target.name]: target.value
         }));
-        console.log(userSate);
     };
+
     useEffect(() => {
         async function fetchData() {
             try {
@@ -60,14 +88,14 @@ const FormUser = ({ user }) => {
             <form className="needs-validation" onSubmit={handleSubmit}>
                 <TextField
                     name="name"
-                    value={userSate.name}
+                    value={userState.name}
                     label="Имя"
                     onChange={handleChangeData}
                 />
                 <TextField
                     label="Почта"
                     name="email"
-                    value={userSate.email}
+                    value={userState.email}
                     onChange={handleChangeData}
                 />
                 <SelectField
@@ -76,13 +104,13 @@ const FormUser = ({ user }) => {
                     options={professions}
                     onChange={handleChangeData}
                     name="profession"
-                    value={userSate.profession.name}
+                    value={userState.profession.name}
                 />
                 <RadioField
                     label="Выбрать пол: "
                     options={radioOptions}
                     name="sex"
-                    value={userSate.sex}
+                    value={userState.sex}
                     onChange={handleChangeData}
                 />
                 <MultiSelectField
@@ -90,8 +118,15 @@ const FormUser = ({ user }) => {
                     options={qualities}
                     name="qualities"
                     onChange={handleChangeData}
-                    defaultValue={userSate.qualities}
+                    defaultValue={userState.qualities}
                 />
+                <button
+                    className="btn btn-success mt-3 mb-3"
+                    type="submit"
+                    // disabled={isValid}
+                >
+                    Отправить
+                </button>
             </form>
         </>
     );
