@@ -44,17 +44,28 @@ const FormUser = ({ user }) => {
         return arrayQualities;
     };
 
+    const verificationProf = (name) => {
+        if (typeof name === "object") {
+            return name;
+        }
+        getProfession(name);
+    };
+
+    const verificationQual = (qualities) => {
+        if (userState.qualities.find((item) => item._id)) {
+            return userState.qualities;
+        }
+        getQualities(qualities);
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoad(true);
-        if (typeof userState.profession === "object") {
-            userState.profession = userState.profession.name;
-        }
         api.users
             .update(user._id, {
                 ...userState,
-                profession: getProfession(userState.profession),
-                qualities: getQualities(qualities)
+                profession: verificationProf(userState.profession),
+                qualities: verificationQual(qualities)
             })
             .then((data) => history.push(`/users/${data._id}`))
             .then(() => setLoad(false));
