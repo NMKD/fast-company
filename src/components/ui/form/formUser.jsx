@@ -45,17 +45,18 @@ const FormUser = ({ user }) => {
     };
 
     const verificationProf = (name) => {
+        console.log(name);
         if (typeof name === "object") {
             return name;
         }
-        getProfession(name);
+        return getProfession(name);
     };
 
     const verificationQual = (qualities) => {
         if (userState.qualities.find((item) => item._id)) {
             return userState.qualities;
         }
-        getQualities(qualities);
+        return getQualities(qualities);
     };
 
     const handleSubmit = (e) => {
