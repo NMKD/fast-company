@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Qualitie from "../qualities/qualitie";
 import { Link } from "react-router-dom";
 
-const CardUser = ({ user, pathName }) => {
+const Card = ({ user, pathName }) => {
     return (
         <>
             {user ? (
@@ -39,9 +39,9 @@ const CardUser = ({ user, pathName }) => {
     );
 };
 
-CardUser.propTypes = {
+Card.propTypes = {
     user: PropTypes.object,
     pathName: PropTypes.string
 };
 
-export default CardUser;
+export default Card;

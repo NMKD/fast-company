@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useRouteMatch, Route } from "react-router-dom";
 import PropTypes from "prop-types";
 import api from "../../../api";
-import EditUser from "./editUser";
-import CardUser from "./cardUser";
+import Edit from "./edit";
+import Card from "./card";
 
 const User = ({ userId }) => {
     const [user, setUser] = useState();
@@ -22,7 +22,6 @@ const User = ({ userId }) => {
     }, []);
 
     const { path, url } = useRouteMatch();
-    console.log(url);
 
     if (!user) {
         return <h1>Loading...</h1>;
@@ -31,10 +30,10 @@ const User = ({ userId }) => {
         <>
             <div className="row">
                 <div className="col-6 offset-md-3 offset-lg-3">
-                    <CardUser user={user} pathName={url} />
+                    <Card user={user} pathName={url} />
                 </div>
                 <Route path={`${path}/:edit`}>
-                    <EditUser user={user} />
+                    <Edit user={user} />
                 </Route>
             </div>
         </>

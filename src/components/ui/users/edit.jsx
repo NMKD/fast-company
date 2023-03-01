@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import FormUser from "../form/formUser";
 import PropTypes from "prop-types";
 
-const EditUsers = ({ user }) => {
+const Edit = ({ user }) => {
     const { edit } = useParams();
     return (
         edit === "edit" && (
@@ -20,8 +20,8 @@ const EditUsers = ({ user }) => {
     );
 };
 
-EditUsers.propTypes = {
+Edit.propTypes = {
     user: PropTypes.object
 };
 
-export default EditUsers;
+export default Edit;
