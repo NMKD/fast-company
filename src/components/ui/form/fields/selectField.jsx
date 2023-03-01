@@ -36,7 +36,7 @@ const SelectField = ({
                 className={getInputClasses()}
                 onChange={handleChangeData}
                 name={name}
-                value={value}
+                value={value === "srting" ? value : value.name}
             >
                 <option disabled value="">
                     {defaulOption}
@@ -61,7 +61,7 @@ SelectField.propTypes = {
     defaulOption: PropTypes.string.isRequired,
     options: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     onChange: PropTypes.func.isRequired,
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     error: PropTypes.string,
     name: PropTypes.string
 };

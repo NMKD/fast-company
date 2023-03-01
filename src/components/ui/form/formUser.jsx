@@ -15,8 +15,10 @@ const FormUser = ({ user }) => {
     const [userState, setUser] = useState(user);
     const [professions, setProfessions] = useState([]);
     const [qualities, setQualities] = useState({});
+    const [isLoading, setLoad] = useState(false);
     // const [errors, setErrors] = useState({});
     // const isValid = Object.keys(errors).length !== 0;
+
     const radioOptions = [
         { name: "Male", value: "male" },
         { name: "Female", value: "female" },
@@ -39,19 +41,23 @@ const FormUser = ({ user }) => {
                 }
             })
         );
-        user = arrayQualities;
         return arrayQualities;
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setLoad(true);
+        if (typeof userState.profession === "object") {
+            userState.profession = userState.profession.name;
+        }
         api.users
             .update(user._id, {
                 ...userState,
                 profession: getProfession(userState.profession),
                 qualities: getQualities(qualities)
             })
-            .then((data) => history.push(`/users/${data._id}`));
+            .then((data) => history.push(`/users/${data._id}`))
+            .then(() => setLoad(false));
     };
 
     const handleChangeData = (target) => {
@@ -69,7 +75,9 @@ const FormUser = ({ user }) => {
     useEffect(() => {
         async function fetchData() {
             try {
+                setLoad(true);
                 setProfessions(await api.professions.fetchAll());
+                setLoad(false);
             } catch (error) {
                 throw new Error(
                     "error when mounting the component SignUpForm in ui/form"
@@ -82,7 +90,9 @@ const FormUser = ({ user }) => {
     useEffect(() => {
         async function fetchData() {
             try {
+                setLoad(true);
                 setQualities(await api.qualities.fetchAll());
+                setLoad(false);
             } catch (error) {
                 throw new Error(
                     "error when mounting the component SignUpForm in ui/form"
@@ -94,49 +104,53 @@ const FormUser = ({ user }) => {
 
     return (
         <>
-            <form className="needs-validation" onSubmit={handleSubmit}>
-                <TextField
-                    name="name"
-                    value={userState.name}
-                    label="Имя"
-                    onChange={handleChangeData}
-                />
-                <TextField
-                    label="Почта"
-                    name="email"
-                    value={userState.email}
-                    onChange={handleChangeData}
-                />
-                <SelectField
-                    label="Выбрать профессию:"
-                    defaulOption="Choose..."
-                    options={professions}
-                    onChange={handleChangeData}
-                    name="profession"
-                    value={userState.profession.name}
-                />
-                <RadioField
-                    label="Выбрать пол: "
-                    options={radioOptions}
-                    name="sex"
-                    value={userState.sex}
-                    onChange={handleChangeData}
-                />
-                <MultiSelectField
-                    label="Выбрать качества:"
-                    options={qualities}
-                    name="qualities"
-                    onChange={handleChangeData}
-                    defaultValue={userState.qualities}
-                />
-                <button
-                    className="btn btn-success mt-3 mb-3"
-                    type="submit"
-                    // disabled={isValid}
-                >
-                    Отправить
-                </button>
-            </form>
+            {!isLoading ? (
+                <form className="needs-validation" onSubmit={handleSubmit}>
+                    <TextField
+                        name="name"
+                        value={userState.name}
+                        label="Имя"
+                        onChange={handleChangeData}
+                    />
+                    <TextField
+                        label="Почта"
+                        name="email"
+                        value={userState.email}
+                        onChange={handleChangeData}
+                    />
+                    <SelectField
+                        label="Выбрать профессию:"
+                        defaulOption="Choose..."
+                        options={professions}
+                        onChange={handleChangeData}
+                        name="profession"
+                        value={userState.profession}
+                    />
+                    <RadioField
+                        label="Выбрать пол: "
+                        options={radioOptions}
+                        name="sex"
+                        value={userState.sex}
+                        onChange={handleChangeData}
+                    />
+                    <MultiSelectField
+                        label="Выбрать качества:"
+                        options={qualities}
+                        name="qualities"
+                        onChange={handleChangeData}
+                        defaultValue={userState.qualities}
+                    />
+                    <button
+                        className="btn btn-success mt-3 mb-3"
+                        type="submit"
+                        // disabled={isValid}
+                    >
+                        Отправить
+                    </button>
+                </form>
+            ) : (
+                <h1>Loading...</h1>
+            )}
         </>
     );
 };
