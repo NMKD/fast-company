@@ -7,12 +7,16 @@ import PropTypes from "prop-types";
 import SelectField from "./fields/selectField";
 import MultiSelectField from "./fields/multiSelectField";
 import RadioField from "./fields/radioField";
+// import { validationSchema } from "../../../utils/validationSchema";
+// import { validate } from "../../../utils/validate";
 
 const FormUser = ({ user }) => {
     const history = useHistory();
     const [userState, setUser] = useState(user);
     const [professions, setProfessions] = useState([]);
     const [qualities, setQualities] = useState({});
+    // const [errors, setErrors] = useState({});
+    // const isValid = Object.keys(errors).length !== 0;
     const radioOptions = [
         { name: "Male", value: "male" },
         { name: "Female", value: "female" },
@@ -56,6 +60,11 @@ const FormUser = ({ user }) => {
             [target.name]: target.value
         }));
     };
+
+    // useEffect(() => {
+    //     const errors = validate(userState, validationSchema);
+    //     setErrors(errors);
+    // }, [userState]);
 
     useEffect(() => {
         async function fetchData() {

@@ -31,11 +31,7 @@ const User = ({ userId }) => {
         <>
             <div className="row">
                 <div className="col-6 offset-md-3 offset-lg-3">
-                    {userId && (
-                        <>
-                            <CardUser user={user} pathName={url} />
-                        </>
-                    )}
+                    <CardUser user={user} pathName={url} />
                 </div>
                 <Route path={`${path}/:edit`}>
                     <EditUser user={user} />
