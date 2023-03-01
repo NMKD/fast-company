@@ -24,6 +24,7 @@ const FormUser = ({ user }) => {
     ];
 
     const getProfession = (name) => {
+        console.log(name.toLowerCase());
         const i = professions.findIndex(
             (prof) => prof.name.toLowerCase() === name.toLowerCase()
         );
@@ -39,7 +40,7 @@ const FormUser = ({ user }) => {
                 }
             })
         );
-
+        user = arrayQualities;
         return arrayQualities;
     };
 
