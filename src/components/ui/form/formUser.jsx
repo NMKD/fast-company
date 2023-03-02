@@ -1,7 +1,5 @@
 /* eslint-disable indent */
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import api from "../../../api";
 import TextField from "./fields/textField";
 import PropTypes from "prop-types";
 import SelectField from "./fields/selectField";
@@ -10,155 +8,65 @@ import RadioField from "./fields/radioField";
 import { validationSchema } from "../../../utils/validationSchema";
 import { validate } from "../../../utils/validate";
 
-const FormUser = ({ user }) => {
-    const history = useHistory();
-    const [formUser, setFormUser] = useState({
-        ...user,
-        profession: user.profession.name
-    });
-    const [professions, setProfessions] = useState([]);
-    const [qualities, setQualities] = useState({});
-    const [isLoading, setLoad] = useState(false);
+const FormUser = ({
+    user,
+    onSubmit,
+    onChange,
+    radioOptions,
+    qualities,
+    professions
+}) => {
     const [errors, setErrors] = useState({});
     const isValid = Object.keys(errors).length !== 0;
 
-    const radioOptions = [
-        { name: "Male", value: "male" },
-        { name: "Female", value: "female" },
-        { name: "Other", value: "other" }
-    ];
-
-    const getProfession = (name) => {
-        const i = professions.findIndex(
-            (prof) => prof.name.toLowerCase() === name.toLowerCase()
-        );
-        return professions[i];
-    };
-
-    const getQualities = (qualities) => {
-        const arrayQualities = [];
-        formUser.qualities.forEach((item) =>
-            Object.keys(qualities).forEach((opt) => {
-                if (qualities[opt]._id === item.value) {
-                    arrayQualities.push(qualities[opt]);
-                }
-            })
-        );
-        return arrayQualities;
-    };
-
-    const verificationProf = (name) => {
-        if (typeof name === "object") {
-            return name;
-        }
-        return getProfession(name);
-    };
-
-    const verificationQual = (qualities) => {
-        if (formUser.qualities.find((item) => item._id)) {
-            return formUser.qualities;
-        }
-        return getQualities(qualities);
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setLoad(true);
-        api.users
-            .update(user._id, {
-                ...formUser,
-                profession: verificationProf(formUser.profession),
-                qualities: verificationQual(qualities)
-            })
-            .then((data) => history.push(`/users/${data._id}`))
-            .then(() => setLoad(false));
-    };
-
-    const handleChangeData = (target) => {
-        setFormUser((prevState) => ({
-            ...prevState,
-            [target.name]: target.value
-        }));
-    };
-
-    const { email, name, profession } = formUser;
+    const { email, name, profession } = user;
     const data = { email, name, profession };
-
     useEffect(() => {
         const errors = validate(data, validationSchema);
         setErrors(errors);
-    }, [formUser]);
-
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                setLoad(true);
-                setProfessions(await api.professions.fetchAll());
-                setLoad(false);
-            } catch (error) {
-                throw new Error(
-                    "error when mounting the component SignUpForm in ui/form"
-                );
-            }
-        }
-        fetchData();
-    }, [professions]);
-
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                setLoad(true);
-                setQualities(await api.qualities.fetchAll());
-                setLoad(false);
-            } catch (error) {
-                throw new Error(
-                    "error when mounting the component SignUpForm in ui/form"
-                );
-            }
-        }
-        fetchData();
-    }, [qualities]);
+    }, [user]);
 
     return (
         <>
-            {!isLoading ? (
-                <form className="needs-validation" onSubmit={handleSubmit}>
+            {user ? (
+                <form className="needs-validation" onSubmit={onSubmit}>
                     <TextField
                         name="name"
-                        value={formUser.name}
+                        value={user.name}
                         label="Имя"
-                        onChange={handleChangeData}
+                        onChange={onChange}
                         errors={errors.name}
                     />
                     <TextField
                         label="Почта"
                         name="email"
-                        value={formUser.email}
-                        onChange={handleChangeData}
+                        value={user.email}
+                        onChange={onChange}
                         errors={errors.email}
                     />
                     <SelectField
                         label="Выбрать профессию:"
                         defaulOption="Choose..."
                         options={professions}
-                        onChange={handleChangeData}
+                        onChange={onChange}
                         name="profession"
-                        value={formUser.profession}
+                        value={user.profession}
                         errors={errors.profession}
                     />
                     <RadioField
                         label="Выбрать пол: "
                         options={radioOptions}
                         name="sex"
-                        value={formUser.sex}
-                        onChange={handleChangeData}
+                        value={user.sex}
+                        onChange={onChange}
                     />
                     <MultiSelectField
                         label="Выбрать качества:"
                         options={qualities}
                         name="qualities"
-                        onChange={handleChangeData}
-                        defaultValue={formUser.qualities}
+                        onChange={onChange}
+                        defaultValue={user.qualities}
+                        errors={errors.qualities}
                     />
                     <button
                         className="btn btn-success mt-3 mb-3"
@@ -176,7 +84,12 @@ const FormUser = ({ user }) => {
 };
 
 FormUser.propTypes = {
-    user: PropTypes.object
+    user: PropTypes.object,
+    onSubmit: PropTypes.func,
+    onChange: PropTypes.func,
+    radioOptions: PropTypes.array,
+    professions: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+    qualities: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
 };
 
 export default FormUser;
