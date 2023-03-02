@@ -66,7 +66,6 @@ const FormUser = ({
                         name="qualities"
                         onChange={onChange}
                         defaultValue={user.qualities}
-                        errors={errors.qualities}
                     />
                     <button
                         className="btn btn-success mt-3 mb-3"
