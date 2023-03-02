@@ -7,17 +7,20 @@ import PropTypes from "prop-types";
 import SelectField from "./fields/selectField";
 import MultiSelectField from "./fields/multiSelectField";
 import RadioField from "./fields/radioField";
-// import { validationSchema } from "../../../utils/validationSchema";
-// import { validate } from "../../../utils/validate";
+import { validationSchema } from "../../../utils/validationSchema";
+import { validate } from "../../../utils/validate";
 
 const FormUser = ({ user }) => {
     const history = useHistory();
-    const [userState, setUser] = useState(user);
+    const [userState, setUser] = useState({
+        ...user,
+        profession: user.profession.name
+    });
     const [professions, setProfessions] = useState([]);
     const [qualities, setQualities] = useState({});
     const [isLoading, setLoad] = useState(false);
-    // const [errors, setErrors] = useState({});
-    // const isValid = Object.keys(errors).length !== 0;
+    const [errors, setErrors] = useState({});
+    const isValid = Object.keys(errors).length !== 0;
 
     const radioOptions = [
         { name: "Male", value: "male" },
@@ -45,7 +48,6 @@ const FormUser = ({ user }) => {
     };
 
     const verificationProf = (name) => {
-        console.log(name);
         if (typeof name === "object") {
             return name;
         }
@@ -79,10 +81,13 @@ const FormUser = ({ user }) => {
         }));
     };
 
-    // useEffect(() => {
-    //     const errors = validate(userState, validationSchema);
-    //     setErrors(errors);
-    // }, [userState]);
+    const { email, name, profession } = userState;
+    const data = { email, name, profession };
+
+    useEffect(() => {
+        const errors = validate(data, validationSchema);
+        setErrors(errors);
+    }, [userState]);
 
     useEffect(() => {
         async function fetchData() {
@@ -123,12 +128,14 @@ const FormUser = ({ user }) => {
                         value={userState.name}
                         label="Имя"
                         onChange={handleChangeData}
+                        errors={errors.name}
                     />
                     <TextField
                         label="Почта"
                         name="email"
                         value={userState.email}
                         onChange={handleChangeData}
+                        errors={errors.email}
                     />
                     <SelectField
                         label="Выбрать профессию:"
@@ -137,6 +144,7 @@ const FormUser = ({ user }) => {
                         onChange={handleChangeData}
                         name="profession"
                         value={userState.profession}
+                        errors={errors.profession}
                     />
                     <RadioField
                         label="Выбрать пол: "
@@ -155,7 +163,7 @@ const FormUser = ({ user }) => {
                     <button
                         className="btn btn-success mt-3 mb-3"
                         type="submit"
-                        // disabled={isValid}
+                        disabled={isValid}
                     >
                         Отправить
                     </button>

@@ -10,6 +10,11 @@ export const yupValidationSingIn = object({
 });
 
 export const validationSchema = {
+    name: {
+        isRequired: {
+            message: "Имя обязательно для заполнения"
+        }
+    },
     email: {
         isRequired: {
             message: "Электронная почта обязательна для заполнения"

@@ -36,7 +36,7 @@ const SelectField = ({
                 className={getInputClasses()}
                 onChange={handleChangeData}
                 name={name}
-                value={value === "srting" ? value : value.name}
+                value={value}
             >
                 <option disabled value="">
                     {defaulOption}
