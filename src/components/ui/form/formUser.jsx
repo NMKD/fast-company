@@ -12,7 +12,7 @@ import { validate } from "../../../utils/validate";
 
 const FormUser = ({ user }) => {
     const history = useHistory();
-    const [userState, setUser] = useState({
+    const [formUser, setFormUser] = useState({
         ...user,
         profession: user.profession.name
     });
@@ -37,7 +37,7 @@ const FormUser = ({ user }) => {
 
     const getQualities = (qualities) => {
         const arrayQualities = [];
-        userState.qualities.forEach((item) =>
+        formUser.qualities.forEach((item) =>
             Object.keys(qualities).forEach((opt) => {
                 if (qualities[opt]._id === item.value) {
                     arrayQualities.push(qualities[opt]);
@@ -55,8 +55,8 @@ const FormUser = ({ user }) => {
     };
 
     const verificationQual = (qualities) => {
-        if (userState.qualities.find((item) => item._id)) {
-            return userState.qualities;
+        if (formUser.qualities.find((item) => item._id)) {
+            return formUser.qualities;
         }
         return getQualities(qualities);
     };
@@ -66,8 +66,8 @@ const FormUser = ({ user }) => {
         setLoad(true);
         api.users
             .update(user._id, {
-                ...userState,
-                profession: verificationProf(userState.profession),
+                ...formUser,
+                profession: verificationProf(formUser.profession),
                 qualities: verificationQual(qualities)
             })
             .then((data) => history.push(`/users/${data._id}`))
@@ -75,19 +75,19 @@ const FormUser = ({ user }) => {
     };
 
     const handleChangeData = (target) => {
-        setUser((prevState) => ({
+        setFormUser((prevState) => ({
             ...prevState,
             [target.name]: target.value
         }));
     };
 
-    const { email, name, profession } = userState;
+    const { email, name, profession } = formUser;
     const data = { email, name, profession };
 
     useEffect(() => {
         const errors = validate(data, validationSchema);
         setErrors(errors);
-    }, [userState]);
+    }, [formUser]);
 
     useEffect(() => {
         async function fetchData() {
@@ -125,7 +125,7 @@ const FormUser = ({ user }) => {
                 <form className="needs-validation" onSubmit={handleSubmit}>
                     <TextField
                         name="name"
-                        value={userState.name}
+                        value={formUser.name}
                         label="Имя"
                         onChange={handleChangeData}
                         errors={errors.name}
@@ -133,7 +133,7 @@ const FormUser = ({ user }) => {
                     <TextField
                         label="Почта"
                         name="email"
-                        value={userState.email}
+                        value={formUser.email}
                         onChange={handleChangeData}
                         errors={errors.email}
                     />
@@ -143,14 +143,14 @@ const FormUser = ({ user }) => {
                         options={professions}
                         onChange={handleChangeData}
                         name="profession"
-                        value={userState.profession}
+                        value={formUser.profession}
                         errors={errors.profession}
                     />
                     <RadioField
                         label="Выбрать пол: "
                         options={radioOptions}
                         name="sex"
-                        value={userState.sex}
+                        value={formUser.sex}
                         onChange={handleChangeData}
                     />
                     <MultiSelectField
@@ -158,7 +158,7 @@ const FormUser = ({ user }) => {
                         options={qualities}
                         name="qualities"
                         onChange={handleChangeData}
-                        defaultValue={userState.qualities}
+                        defaultValue={formUser.qualities}
                     />
                     <button
                         className="btn btn-success mt-3 mb-3"
