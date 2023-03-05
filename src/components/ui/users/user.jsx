@@ -7,9 +7,8 @@ import Card from "./card";
 
 const User = ({ userId }) => {
     const { edit } = useParams();
-    const [user, setUser] = useState();
+    const [user, setUser] = useState({});
     const fromUser = user ? { ...user, profession: user.profession.name } : {};
-    console.log(fromUser);
     const history = useHistory();
     const [professions, setProfessions] = useState([]);
     const [qualities, setQualities] = useState({});
