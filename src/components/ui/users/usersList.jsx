@@ -95,11 +95,10 @@ const UsersList = () => {
         setCurrentPage(1);
     }, [selectedProf]);
 
-    useState(() => {
+    useEffect(() => {
         async function fetchData() {
             try {
-                const apiUsers = await api.users.fetchAll();
-                setUsers(apiUsers);
+                setUsers(await api.users.fetchAll());
             } catch (error) {
                 throw new Error(
                     "error when mounting the component usersList when fetchData to api/users"

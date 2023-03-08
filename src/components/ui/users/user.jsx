@@ -4,10 +4,13 @@ import PropTypes from "prop-types";
 import api from "../../../api";
 import Edit from "./edit";
 import Card from "./card";
+import QualitieList from "./qualities/qualitieList";
+import CompletedMeetings from "./completedMeetings";
+import Comments from "../comments/comments";
 
 const User = ({ userId }) => {
     const { edit } = useParams();
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState();
     const fromUser = user ? { ...user, profession: user.profession.name } : {};
     const history = useHistory();
     const [professions, setProfessions] = useState([]);
@@ -46,7 +49,7 @@ const User = ({ userId }) => {
     };
 
     const verificationQual = (qualities) => {
-        if (user.qualities.find((item) => item._id)) {
+        if (user.qualities.filter((item) => item._id)) {
             return user.qualities;
         }
         return getQualities(qualities);
@@ -72,39 +75,15 @@ const User = ({ userId }) => {
     };
 
     useEffect(() => {
+        console.log("fetch to api/users");
         async function fetchData() {
             try {
+                setUser(await api.users.getById(userId));
                 setProfessions(await api.professions.fetchAll());
-            } catch (error) {
-                throw new Error(
-                    "error when mounting the component User in ui/users/user"
-                );
-            }
-        }
-        fetchData();
-    }, [professions]);
-
-    useEffect(() => {
-        async function fetchData() {
-            try {
                 setQualities(await api.qualities.fetchAll());
             } catch (error) {
                 throw new Error(
-                    "error when mounting the component User in ui/users/user"
-                );
-            }
-        }
-        fetchData();
-    }, [qualities]);
-
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const newUser = await api.users.getById(userId);
-                setUser(newUser);
-            } catch (error) {
-                throw new Error(
-                    "error when mounting the component User in ui/users/user"
+                    "error when mounting the component User in ui/users/user, check the server requests to api/users"
                 );
             }
         }
@@ -114,29 +93,51 @@ const User = ({ userId }) => {
     const { url } = useRouteMatch();
 
     if (!user) {
-        return <h1>Loading...</h1>;
+        return (
+            <div className="container">
+                <div className="row">
+                    <h2>Loading...</h2>
+                </div>
+            </div>
+        );
     }
+
     return (
         <>
-            <div className="row">
-                <>
-                    {edit === "edit" ? (
-                        <Edit
-                            onSubmit={handleSubmit}
-                            onChange={handleChangeData}
-                            {...{
-                                radioOptions,
-                                professions,
-                                qualities,
-                                user: fromUser
-                            }}
-                        />
-                    ) : (
-                        <div className="col-6 offset-md-3 offset-lg-3">
-                            <Card user={user} pathName={url} />
-                        </div>
-                    )}
-                </>
+            <div className="container">
+                <div className="row">
+                    <>
+                        {edit === "edit" ? (
+                            <Edit
+                                onSubmit={handleSubmit}
+                                onChange={handleChangeData}
+                                {...{
+                                    radioOptions,
+                                    professions,
+                                    qualities,
+                                    user: fromUser
+                                }}
+                            />
+                        ) : (
+                            <>
+                                <div className="col-12 col-md-4 col-lg-4">
+                                    <Card user={user} pathName={url} />
+                                    <QualitieList
+                                        qualities={fromUser.qualities}
+                                    />
+                                    <CompletedMeetings
+                                        completedMeetings={
+                                            fromUser.completedMeetings
+                                        }
+                                    />
+                                </div>
+                                <div className="col-12 col-md-8 col-lg-8">
+                                    <Comments {...{ userId }} />
+                                </div>
+                            </>
+                        )}
+                    </>
+                </div>
             </div>
         </>
     );

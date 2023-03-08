@@ -32,9 +32,9 @@ const qualities = {
 };
 const fetchAll = () =>
     new Promise((resolve) => {
-        setTimeout(function () {
+        window.setTimeout(function () {
             resolve(qualities);
-        }, 1000);
+        }, 2000);
     });
 
 export default {

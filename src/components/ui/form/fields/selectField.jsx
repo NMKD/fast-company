@@ -57,10 +57,10 @@ const SelectField = ({
 };
 
 SelectField.propTypes = {
-    label: PropTypes.string.isRequired,
-    defaulOption: PropTypes.string.isRequired,
+    label: PropTypes.string,
+    defaulOption: PropTypes.string,
     options: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-    onChange: PropTypes.func.isRequired,
+    onChange: PropTypes.func,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     error: PropTypes.string,
     name: PropTypes.string

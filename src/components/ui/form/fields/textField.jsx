@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const TextField = ({ label, type, name, value, onChange, errors }) => {
+const TextField = ({ label, type, name, value, onChange, error }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     // Метод для изменения состояния
@@ -9,7 +9,7 @@ const TextField = ({ label, type, name, value, onChange, errors }) => {
         setShowPassword((prevState) => !prevState);
     };
     const getInputClasses = () => {
-        return "form-control " + (errors ? "is-invalid" : "");
+        return "form-control " + (error ? "is-invalid" : "");
     };
     const handleChangeData = ({ target }) => {
         onChange({ name: target.name, value: target.value });
@@ -42,7 +42,7 @@ const TextField = ({ label, type, name, value, onChange, errors }) => {
                         ></i>
                     </button>
                 )}
-                {errors && <div className="invalid-feedback">{errors}</div>}
+                {error && <div className="invalid-feedback">{error}</div>}
             </div>
         </div>
     );
@@ -58,7 +58,7 @@ TextField.propTypes = {
     name: PropTypes.string,
     value: PropTypes.string,
     onChange: PropTypes.func,
-    errors: PropTypes.string
+    error: PropTypes.string
 };
 
 export default TextField;

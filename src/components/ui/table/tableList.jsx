@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Table from "./table";
 import BookMark from "./bookmark/bookmark";
-import QualitieList from "../qualities/qualitieList";
+import QualitieList from "../users/qualities/qualitieList";
 import { Link } from "react-router-dom";
 
 const TableList = ({ users, onDelete, onToogle, currentSort, onSort }) => {

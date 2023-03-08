@@ -41,5 +41,10 @@ export const validationSchema = {
         isRequired: {
             message: "Пожалуйста примите лицензионное соглашение"
         }
+    },
+    content: {
+        isRequired: {
+            message: "Нельзя отправить пустой комментарий"
+        }
     }
 };

@@ -1,40 +1,40 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Qualitie from "../qualities/qualitie";
 import { Link } from "react-router-dom";
+import Avatar from "./avatar";
 
 const Card = ({ user, pathName }) => {
     return (
         <>
-            {user ? (
-                <div className="card m-2 shadow">
-                    <div className="card-body">
-                        <h5 className="card-title">{user.name}</h5>
-                        <h6 className="card-subtitle mb-2 text-muted">
-                            Профессия: {user.profession.name}
-                        </h6>
-                        {user.qualities.map((q) => (
-                            <Qualitie
-                                key={q.name}
-                                color={q.color}
-                                name={q.name}
-                            />
-                        ))}
-                        <p className="card-text">Rate: {user.rate}</p>
-                        <p className="card-text">
-                            completedMeetings: {user.completedMeetings}
-                        </p>
-                        <Link
-                            className="btn btn-primary"
-                            to={`${pathName}/edit`}
-                        >
-                            Изменить
+            <div className="card mb-3">
+                <div className="card-body">
+                    <button className="position-absolute top-0 end-0 btn btn-light btn-sm">
+                        <Link to={`${pathName}/edit`}>
+                            <i className="bi bi-gear"></i>
                         </Link>
+                    </button>
+                    <div className="d-flex flex-column align-items-center text-center position-relative">
+                        <Avatar />
+                        <div className="mt-3">
+                            <h4>{user.name}</h4>
+                            <p className="text-secondary mb-1">
+                                {user.profession.name}
+                            </p>
+                            <div className="text-muted">
+                                <i
+                                    className="bi bi-caret-down-fill text-primary"
+                                    role="button"
+                                ></i>
+                                <i
+                                    className="bi bi-caret-up text-secondary"
+                                    role="button"
+                                ></i>
+                                <span className="ms-2">{user.rate}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            ) : (
-                <h1>Loading...</h1>
-            )}
+            </div>
         </>
     );
 };

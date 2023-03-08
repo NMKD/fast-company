@@ -35,14 +35,14 @@ const FormUser = ({
                         value={user.name}
                         label="Имя"
                         onChange={onChange}
-                        errors={errors.name}
+                        error={errors.name}
                     />
                     <TextField
                         label="Почта"
                         name="email"
                         value={user.email}
                         onChange={onChange}
-                        errors={errors.email}
+                        error={errors.email}
                     />
                     <SelectField
                         label="Выбрать профессию:"
@@ -51,7 +51,7 @@ const FormUser = ({
                         onChange={onChange}
                         name="profession"
                         value={user.profession}
-                        errors={errors.profession}
+                        error={errors.profession}
                     />
                     <RadioField
                         label="Выбрать пол: "

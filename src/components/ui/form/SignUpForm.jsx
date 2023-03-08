@@ -81,7 +81,7 @@ const SignUpForm = () => {
                 name="email"
                 value={email}
                 onChange={handleChangeData}
-                errors={errors.email}
+                error={errors.email}
             />
             <TextField
                 label="Пароль"
@@ -89,7 +89,7 @@ const SignUpForm = () => {
                 name="password"
                 value={password}
                 onChange={handleChangeData}
-                errors={errors.password}
+                error={errors.password}
             />
             <SelectField
                 label="Выбрать профессию:"

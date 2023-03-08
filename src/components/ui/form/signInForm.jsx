@@ -39,7 +39,7 @@ const SingInForm = () => {
                 name="email"
                 value={email}
                 onChange={handleChangeData}
-                errors={errors.email}
+                error={errors.email}
             />
             <TextField
                 label="Пароль"
@@ -47,7 +47,7 @@ const SingInForm = () => {
                 name="password"
                 value={password}
                 onChange={handleChangeData}
-                errors={errors.password}
+                error={errors.password}
             />
 
             <button
