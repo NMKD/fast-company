@@ -18,7 +18,8 @@ export function formstDate(data) {
             return `${date.getHours()} : ${date.getMinutes()}`;
         }
         return `${date.getDate()} ${date.toLocaleString("default", {
-            month: "long"
+            month: "long",
+            day: "numeric"
         })}`;
     }
     return `${date.toLocaleDateString()}`;
