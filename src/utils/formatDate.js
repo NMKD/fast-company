@@ -9,9 +9,9 @@ export function formstDate(data) {
             if (hoursDif === 0) {
                 const minutesDif = now.getMinutes() - date.getMinutes();
                 if (minutesDif >= 0 && minutesDif < 5) return "1 минуту назад";
-                if (minutesDif >= 0 && minutesDif < 10) return "5 минуту назад";
+                if (minutesDif >= 0 && minutesDif < 10) return "5 минут назад";
                 if (minutesDif >= 0 && minutesDif < 30) {
-                    return "10 минуту назад";
+                    return "10 минут назад";
                 }
                 return "30 минут назад";
             }
