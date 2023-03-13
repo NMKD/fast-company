@@ -6,12 +6,8 @@ import UsersList from "../ui/users/usersList";
 
 const Users = () => {
     const { id } = useParams();
-    // const { users } = useUserContext();
-    // console.log(users);
     return (
-        <UserProvider>
-            <>{id ? <User userId={id} /> : <UsersList />}</>
-        </UserProvider>
+        <UserProvider>{id ? <User userId={id} /> : <UsersList />}</UserProvider>
     );
 };
 

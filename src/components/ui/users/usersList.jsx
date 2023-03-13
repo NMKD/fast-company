@@ -8,10 +8,12 @@ import TableList from "../table/tableList";
 import SearchInput from "../form/fields/searchInput";
 import _ from "lodash";
 import api from "../../../api";
+import { useUserContext } from "../../../hooks/useUsers";
 
 const UsersList = () => {
-    // professions/api/users
-    const [users, setUsers] = useState([]);
+    const { users } = useUserContext();
+    console.log(users);
+
     // professions/api/filter
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
@@ -76,37 +78,25 @@ const UsersList = () => {
         setSortBy(item);
     };
 
-    const handleDelete = (userId) =>
-        setUsers((prevState) => prevState.filter((d) => d._id !== userId));
+    const handleDelete = (userId) => console.log(userId);
+    // setUsers((prevState) => prevState.filter((d) => d._id !== userId));
 
     const handleToogleBookMark = (id) => {
-        setUsers(
-            users.map((user) => ({
-                ...user,
-                bookmark:
-                    user._id === id
-                        ? (user.bookmark = !user.bookmark)
-                        : user.bookmark
-            }))
-        );
+        // setUsers(
+        //     users.map((user) => ({
+        //         ...user,
+        //         bookmark:
+        //             user._id === id
+        //                 ? (user.bookmark = !user.bookmark)
+        //                 : user.bookmark
+        //     }))
+        // );
+        console.log(id);
     };
 
     useEffect(() => {
         setCurrentPage(1);
     }, [selectedProf]);
-
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                setUsers(await api.users.fetchAll());
-            } catch (error) {
-                throw new Error(
-                    "error when mounting the component usersList when fetchData to api/users"
-                );
-            }
-        }
-        fetchData();
-    }, [users]);
 
     useEffect(() => {
         async function fetchData() {
