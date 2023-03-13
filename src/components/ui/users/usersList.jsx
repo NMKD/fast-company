@@ -12,7 +12,6 @@ import { useUserContext } from "../../../hooks/useUsers";
 
 const UsersList = () => {
     const { users } = useUserContext();
-    console.log(users);
 
     // professions/api/filter
     const [professions, setProfessions] = useState();
