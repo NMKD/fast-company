@@ -10,7 +10,7 @@ export const useUserContext = () => {
 
 const UserProvider = ({ children }) => {
     const [users, setUsers] = useState();
-    console.log(users);
+
     useEffect(() => {
         async function fetchData() {
             const allUsers = await userService.fetchAll();
