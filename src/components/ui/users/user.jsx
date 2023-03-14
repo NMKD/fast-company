@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRouteMatch, useParams, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import api from "../../../api";
@@ -10,6 +10,7 @@ import Comments from "../comments/comments";
 import { useUserContext } from "../../../hooks/useUsers";
 import { useProfessionContext } from "../../../hooks/useProfession";
 import { useQualitiesContext } from "../../../hooks/useQualities";
+// import useForm from "../../../hooks/useForm";
 
 const User = ({ userId }) => {
     const { edit } = useParams();
@@ -19,6 +20,8 @@ const User = ({ userId }) => {
     const user = getUser(userId);
     const fromUser =
         user !== null ? { ...user, profession: user.profession.name } : {};
+    const [form, setForm] = useState(fromUser);
+
     const history = useHistory();
 
     const radioOptions = [
@@ -36,7 +39,7 @@ const User = ({ userId }) => {
 
     const getQualities = (qualities) => {
         const arrayQualities = [];
-        fromUser.qualities.forEach((item) =>
+        form.qualities.forEach((item) =>
             Object.keys(qualities).forEach((opt) => {
                 if (qualities[opt]._id === item.value) {
                     arrayQualities.push(qualities[opt]);
@@ -64,20 +67,19 @@ const User = ({ userId }) => {
         e.preventDefault();
         api.users
             .update(user._id, {
-                ...fromUser,
+                ...form,
                 profession: verificationProf(user.profession),
                 qualities: verificationQual(qualities)
             })
-            // .then((data) => setUser(data))
+            .then((data) => setForm(data))
             .then(() => history.push(`/users/${user._id}`));
     };
 
-    const handleChangeData = (target) => {
-        // setUser((prevState) => ({
-        //     ...prevState,
-        //     [target.name]: target.value
-        // }));
-        console.log(target);
+    const handleChange = (target) => {
+        setForm((prevState) => ({
+            ...prevState,
+            [target.name]: target.value
+        }));
     };
 
     const { url } = useRouteMatch();
@@ -100,7 +102,7 @@ const User = ({ userId }) => {
                         {edit === "edit" ? (
                             <Edit
                                 onSubmit={handleSubmit}
-                                onChange={handleChangeData}
+                                onChange={handleChange}
                                 {...{
                                     radioOptions,
                                     professions,
