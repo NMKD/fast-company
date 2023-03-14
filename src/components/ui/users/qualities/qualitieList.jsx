@@ -1,28 +1,25 @@
 import React from "react";
 import Qualitie from "./qualitie";
 import PropTypes from "prop-types";
+import { useQualitiesContext } from "../../../../hooks/useQualities";
 
 const QualitieList = ({ qualities }) => {
+    const { getQualities } = useQualitiesContext();
+    const data = getQualities(qualities);
     return (
         <>
-            <div className="card mb-3">
-                <div className="card-body d-flex flex-column justify-content-center text-center">
-                    <h6 className="card-title">
-                        <span>Qualities</span>
-                    </h6>
-                    <p className="card-text">
-                        {qualities &&
-                            qualities.map((q) => (
-                                <Qualitie key={q.color} {...q} />
-                            ))}
-                    </p>
-                </div>
-            </div>
+            <p className="card-text">
+                {data &&
+                    data.map((q) => <Qualitie key={q.color + q.name} {...q} />)}
+            </p>
         </>
     );
 };
 QualitieList.propTypes = {
-    qualities: PropTypes.arrayOf(PropTypes.object)
+    qualities: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.object),
+        PropTypes.arrayOf(PropTypes.string)
+    ])
 };
 
 export default QualitieList;

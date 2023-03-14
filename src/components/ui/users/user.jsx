@@ -122,9 +122,16 @@ const User = ({ userId }) => {
                             <>
                                 <div className="col-12 col-md-4 col-lg-4">
                                     <Card user={user} pathName={url} />
-                                    <QualitieList
-                                        qualities={fromUser.qualities}
-                                    />
+                                    <div className="card mb-3">
+                                        <div className="card-body d-flex flex-column justify-content-center text-center">
+                                            <h6 className="card-title">
+                                                <span>Qualities</span>
+                                            </h6>
+                                            <QualitieList
+                                                qualities={fromUser.qualities}
+                                            />
+                                        </div>
+                                    </div>
                                     <CompletedMeetings
                                         completedMeetings={
                                             fromUser.completedMeetings

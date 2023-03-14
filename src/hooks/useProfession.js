@@ -11,16 +11,19 @@ export const useProfessionContext = () => {
 
 const ProfessionProvider = ({ children }) => {
     const [professions, setProfessions] = useState();
-
+    const [isLoading, setLoading] = useState();
     const getProfession = (id) => professions.find((item) => item._id === id);
 
     useEffect(() => {
         async function fetchData() {
+            setLoading(true);
             const allProfessions = await professionService.fetchAll();
             if (typeof allProfessions !== "string") {
                 const { data } = allProfessions;
                 setProfessions(data.content);
+                setLoading(false);
             } else {
+                setLoading(false);
                 toast.error(`Ошибка: ${allProfessions}`);
             }
         }
@@ -29,7 +32,7 @@ const ProfessionProvider = ({ children }) => {
 
     return (
         <ProfessionContext.Provider value={{ professions, getProfession }}>
-            {professions && children}
+            {!isLoading && children}
         </ProfessionContext.Provider>
     );
 };

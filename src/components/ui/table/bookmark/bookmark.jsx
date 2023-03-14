@@ -15,9 +15,9 @@ const BookMark = ({ id, status, toogle }) => {
 };
 
 BookMark.propTypes = {
-    id: PropTypes.string.isRequired,
-    status: PropTypes.bool.isRequired,
-    toogle: PropTypes.func.isRequired
+    id: PropTypes.string,
+    status: PropTypes.bool,
+    toogle: PropTypes.func
 };
 
 export default BookMark;

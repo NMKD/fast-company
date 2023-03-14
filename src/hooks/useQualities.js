@@ -10,23 +10,39 @@ export const useQualitiesContext = () => {
 };
 
 const QualitiesProvider = ({ children }) => {
-    const [qualities, setQualities] = useState();
+    const [stateQualities, setQualities] = useState();
+    const [isLoading, setLoading] = useState();
+    const getQualities = (qualities) => {
+        const arrayQualities = [];
+        qualities.forEach((id) => {
+            stateQualities.forEach((item) => {
+                if (item._id === id) {
+                    arrayQualities.push(item);
+                }
+            });
+        });
+        return arrayQualities;
+    };
 
     useEffect(() => {
         async function fetchData() {
+            setLoading(true);
             const allQualities = await qualityService.fetchAll();
             if (typeof allQualities !== "string") {
                 const { data } = allQualities;
                 setQualities(data.content);
+                setLoading(false);
             } else {
+                setLoading(false);
                 toast.error(`Ошибка: ${allQualities}`);
             }
         }
         fetchData();
     }, []);
+
     return (
-        <QualitiesContext.Provider value={{ qualities }}>
-            {children}
+        <QualitiesContext.Provider value={{ stateQualities, getQualities }}>
+            {!isLoading && children}
         </QualitiesContext.Provider>
     );
 };

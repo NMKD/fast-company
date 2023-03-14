@@ -9,7 +9,7 @@ export const useUserContext = () => {
 };
 
 const UserProvider = ({ children }) => {
-    const [users, setUsers] = useState();
+    const [users, setUsers] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
@@ -26,7 +26,11 @@ const UserProvider = ({ children }) => {
 
     return (
         <UserContext.Provider value={{ users }}>
-            {users && children}
+            {users.length > 0 ? (
+                children
+            ) : (
+                <h1>Hello! Waiting for loading...</h1>
+            )}
         </UserContext.Provider>
     );
 };
