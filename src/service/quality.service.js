@@ -1,7 +1,6 @@
 import httpServer from "./http.service";
-import config from "../config.json";
 
-const urlQuality = `${config.apiEndPoint}quality/`;
+const urlQuality = `quality/`;
 
 const qualityService = {
     fetchAll: async () => {

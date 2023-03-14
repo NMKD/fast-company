@@ -1,7 +1,6 @@
 import httpServer from "./http.service";
-import config from "../config.json";
 
-const urlProfession = `${config.apiEndPoint}profession/`;
+const urlProfession = `profession/`;
 
 const professionService = {
     fetchAll: async () => {

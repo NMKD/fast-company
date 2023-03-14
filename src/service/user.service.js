@@ -1,7 +1,6 @@
 import httpServer from "./http.service";
-import config from "../config.json";
 
-const urlUsers = `${config.apiEndPoint}user/`;
+const urlUsers = `user/`;
 
 const userService = {
     put: async (id, obj) => {
