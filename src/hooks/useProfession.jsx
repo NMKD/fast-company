@@ -12,10 +12,11 @@ export const useProfessionContext = () => {
 const ProfessionProvider = ({ children }) => {
     const [professions, setProfessions] = useState();
 
+    const getProfession = (id) => professions.find((item) => item._id === id);
+
     useEffect(() => {
         async function fetchData() {
             const allProfessions = await professionService.fetchAll();
-            console.log(allProfessions);
             if (typeof allUsers !== "string") {
                 const { data } = allProfessions;
                 setProfessions(data.content);
@@ -27,7 +28,7 @@ const ProfessionProvider = ({ children }) => {
     }, []);
 
     return (
-        <ProfessionContext.Provider value={{ professions }}>
+        <ProfessionContext.Provider value={{ professions, getProfession }}>
             {professions && children}
         </ProfessionContext.Provider>
     );

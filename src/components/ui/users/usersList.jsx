@@ -7,14 +7,14 @@ import GroupList from "./professions/groupList";
 import TableList from "../table/tableList";
 import SearchInput from "../form/fields/searchInput";
 import _ from "lodash";
-import api from "../../../api";
 import { useUserContext } from "../../../hooks/useUsers";
+import { useProfessionContext } from "../../../hooks/useProfession";
 
 const UsersList = () => {
     const { users } = useUserContext();
+    const { professions } = useProfessionContext();
 
     // professions/api/filter
-    const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({
         path: "name",
@@ -97,21 +97,6 @@ const UsersList = () => {
         setCurrentPage(1);
     }, [selectedProf]);
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const newProf = await api.professions.fetchAll();
-                setProfessions(newProf);
-            } catch (error) {
-                throw new Error(
-                    "error when mounting the component GroupList in Users"
-                );
-            }
-        }
-        fetchData();
-        setCurrentPage(1);
-    }, [professions]);
-
     if (users.length === 0) {
         return <h2>Loading...</h2>;
     }
@@ -121,21 +106,19 @@ const UsersList = () => {
             <div className="container pt-4">
                 <div className="row">
                     <div className="col col-sm-12 col-lg-2">
-                        {professions && (
-                            <>
-                                <GroupList
-                                    selectedItem={selectedProf}
-                                    items={professions}
-                                    onFilter={handleFilterSelect}
-                                />
-                                <button
-                                    className="btn btn-danger mt-2 mb-2"
-                                    onClick={handleClearFilterSelect}
-                                >
-                                    Очистить
-                                </button>
-                            </>
-                        )}
+                        <>
+                            <GroupList
+                                selectedItem={selectedProf}
+                                items={professions}
+                                onFilter={handleFilterSelect}
+                            />
+                            <button
+                                className="btn btn-danger mt-2 mb-2"
+                                onClick={handleClearFilterSelect}
+                            >
+                                Очистить
+                            </button>
+                        </>
                     </div>
                     <div className="col col-sm-12 col-lg-8">
                         <SearchStatus length={count} />

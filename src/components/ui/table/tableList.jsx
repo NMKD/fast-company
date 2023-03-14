@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Table from "./table";
 import BookMark from "./bookmark/bookmark";
 import QualitieList from "../users/qualities/qualitieList";
+import Profession from "../../ui/users/professions/profession";
 import { Link } from "react-router-dom";
 
 const TableList = ({ users, onDelete, onToogle, currentSort, onSort }) => {
@@ -19,8 +20,8 @@ const TableList = ({ users, onDelete, onToogle, currentSort, onSort }) => {
             component: (user) => <QualitieList qualities={user.qualities} />
         },
         profession: {
-            path: "profession.name",
-            name: "Профессия"
+            name: "Профессия",
+            component: (user) => <Profession id={user.profession} />
         },
         completedMeetings: {
             path: "completedMeetings",
