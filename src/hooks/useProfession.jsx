@@ -17,7 +17,7 @@ const ProfessionProvider = ({ children }) => {
     useEffect(() => {
         async function fetchData() {
             const allProfessions = await professionService.fetchAll();
-            if (typeof allUsers !== "string") {
+            if (typeof allProfessions !== "string") {
                 const { data } = allProfessions;
                 setProfessions(data.content);
             } else {
