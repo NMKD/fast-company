@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useRouteMatch, useParams, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import api from "../../../api";
@@ -7,14 +7,19 @@ import Card from "./card";
 import QualitieList from "./qualities/qualitieList";
 import CompletedMeetings from "./completedMeetings";
 import Comments from "../comments/comments";
+import { useUserContext } from "../../../hooks/useUsers";
+import { useProfessionContext } from "../../../hooks/useProfession";
+import { useQualitiesContext } from "../../../hooks/useQualities";
 
 const User = ({ userId }) => {
     const { edit } = useParams();
-    const [user, setUser] = useState();
-    const fromUser = user ? { ...user, profession: user.profession.name } : {};
+    const { getUser } = useUserContext();
+    const { professions } = useProfessionContext();
+    const { qualities } = useQualitiesContext();
+    const user = getUser(userId);
+    const fromUser =
+        user !== null ? { ...user, profession: user.profession.name } : {};
     const history = useHistory();
-    const [professions, setProfessions] = useState([]);
-    const [qualities, setQualities] = useState({});
 
     const radioOptions = [
         { name: "Male", value: "male" },
@@ -63,32 +68,17 @@ const User = ({ userId }) => {
                 profession: verificationProf(user.profession),
                 qualities: verificationQual(qualities)
             })
-            .then((data) => setUser(data))
+            // .then((data) => setUser(data))
             .then(() => history.push(`/users/${user._id}`));
     };
 
     const handleChangeData = (target) => {
-        setUser((prevState) => ({
-            ...prevState,
-            [target.name]: target.value
-        }));
+        // setUser((prevState) => ({
+        //     ...prevState,
+        //     [target.name]: target.value
+        // }));
+        console.log(target);
     };
-
-    useEffect(() => {
-        console.log("fetch to api/users");
-        async function fetchData() {
-            try {
-                setUser(await api.users.getById(userId));
-                setProfessions(await api.professions.fetchAll());
-                setQualities(await api.qualities.fetchAll());
-            } catch (error) {
-                throw new Error(
-                    "error when mounting the component User in ui/users/user, check the server requests to api/users"
-                );
-            }
-        }
-        fetchData();
-    }, []);
 
     const { url } = useRouteMatch();
 

@@ -11,6 +11,8 @@ export const useUserContext = () => {
 const UserProvider = ({ children }) => {
     const [users, setUsers] = useState([]);
 
+    const getUser = (id) => users.find((item) => item._id === id);
+
     useEffect(() => {
         async function fetchData() {
             const allUsers = await userService.fetchAll();
@@ -25,7 +27,7 @@ const UserProvider = ({ children }) => {
     }, []);
 
     return (
-        <UserContext.Provider value={{ users }}>
+        <UserContext.Provider value={{ users, getUser }}>
             {users.length > 0 ? (
                 children
             ) : (
